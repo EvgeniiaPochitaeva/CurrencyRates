@@ -1,6 +1,6 @@
 package org.example.client;
 
-/*Класс-заглушка для UserSettings*/
+/*To Be removed - instead of real UserSettings*/
 
 import lombok.Builder;
 import lombok.Data;

@@ -12,7 +12,7 @@ public class HttpDemo {
         CurrencyClient currencyClient = new CurrencyClient();
         User user = User.builder()
                 .id(123)
-                .userSettings(new UserSettings("Monobank", true, true, false, "9", "2"))
+                .userSettings(new UserSettings("Monobank", true, true, true, "9", "2"))
                 .build();
 
         System.out.println(currencyClient.getUserMonoCurrencyRates(user.getUserSettings()));

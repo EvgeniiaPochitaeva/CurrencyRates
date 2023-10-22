@@ -1,5 +1,6 @@
 package org.example.client;
 
+import io.netty.util.internal.MathUtil;
 import org.example.bank.currency.MonoCurrency;
 import org.example.bank.currency.NBUCurrency;
 import org.example.bank.currency.PBCurrency;
@@ -70,13 +71,18 @@ public class CurrencyClient {
         return currencyRates;
     }
 
+
+
     //        if (user.getUserSettings().getBank().equals("Monobank"))
     @SneakyThrows
     public List<MonoCurrency> getUserMonoCurrencyRates(UserSettings userSettings) {
+        //int dot = Integer.parseInt(userSettings.getDot());
+
         if (userSettings.getEuro().equals(true) && userSettings.getUsd().equals(false)) {
             List<MonoCurrency> currencyRates = new CurrencyClient().getMonoCurrencyRates(URI.create(MONO_URI));
             return currencyRates.stream()
                     .filter(s -> s.getCurrencyCodeA() == EUR_CODE && s.getCurrencyCodeB() == UAH_CODE)
+                    //.map(s -> Math.round(s.getRateSell(), dot))
                     .toList();
 
         }
