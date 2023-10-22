@@ -8,6 +8,4 @@ import lombok.Data;
 public class User {
     private int id;
     private UserSettings userSettings;
-
-
 }
