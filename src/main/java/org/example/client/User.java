@@ -9,4 +9,5 @@ public class User {
     private int id;
     private UserSettings userSettings;
 
+
 }
