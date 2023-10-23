@@ -15,6 +15,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+//import com.vdurmont.emoji.EmojiParser;
 
 public class Main extends TelegramLongPollingBot {
     public static void main(String[] args) throws TelegramApiException {
@@ -179,7 +180,7 @@ public class Main extends TelegramLongPollingBot {
 
         for (Map.Entry<String, String> entry : buttons.entrySet()) {
             InlineKeyboardButton button = new InlineKeyboardButton();
-//            String buttonText = entry.getKey() + " ✅";
+
             button.setText(new String(entry.getKey().getBytes(), StandardCharsets.UTF_8));
             button.setCallbackData(entry.getValue());
             row.add(button);

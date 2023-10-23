@@ -14,7 +14,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     // https://mvnrepository.com/artifact/org.telegram/telegrambots
-    implementation("org.telegram:telegrambots:6.3.0")
+    implementation("org.telegram:telegrambots:6.8.0")
+
 
 
     implementation("org.slf4j:slf4j-api:1.7.32")
