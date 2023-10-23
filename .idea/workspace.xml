@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2104bcad-bcbc-47f0-bc7a-0790ea93ef0b" name="Changes" comment="update project settings">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-    </list>
+    <list default="true" id="2104bcad-bcbc-47f0-bc7a-0790ea93ef0b" name="Changes" comment="Add: &#10;- packages bank currency and client &#10;- Dto classes&#10;- demo classes HttpDemo, User, UserSettings" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,28 +18,54 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="CurrencyRates" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "vasylevskyi"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="bec306bb-031d-453e-b8ee-6371f96d91de" />
+        <option name="url" value="https://github.com/EvgeniiaPochitaeva/CurrencyRates.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
   <component name="ProjectId" id="2X4HmJn81RJXg5kWxD179AtkCyx" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -54,13 +74,10 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Dto",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/eshap/IdeaProjects/CurrencyRates",
-    "onboarding.tips.debug.path": "C:/Users/eshap/IdeaProjects/CurrencyRates/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.21149425",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+    "last_opened_file_path": "C:/Users/eshap/IdeaProjects/BanderogusBot",
+    "onboarding.tips.debug.path": "C:/Users/eshap/IdeaProjects/CurrencyRates/src/main/java/org/example/Main.java"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -77,9 +94,73 @@
       <option name="presentableId" value="Default" />
       <updated>1697881591352</updated>
     </task>
+    <task id="LOCAL-00001" summary="Add: &#10;- packages bank currency and client &#10;- Dto classes&#10;- demo classes HttpDemo, User, UserSettings">
+      <option name="closed" value="true" />
+      <created>1697975566914</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1697975566914</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add: &#10;- packages bank currency and client &#10;- Dto classes&#10;- demo classes HttpDemo, User, UserSettings">
+      <option name="closed" value="true" />
+      <created>1697975825204</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1697975825204</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add: &#10;- packages bank currency and client &#10;- Dto classes&#10;- demo classes HttpDemo, User, UserSettings">
+      <option name="closed" value="true" />
+      <created>1697976807678</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1697976807678</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add: &#10;- packages bank currency and client &#10;- Dto classes&#10;- demo classes HttpDemo, User, UserSettings">
+      <option name="closed" value="true" />
+      <created>1697996152526</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1697996152526</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="Dto" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -87,18 +168,7 @@
             <State>
               <option name="CUSTOM_BOOLEAN_PROPERTIES">
                 <map>
-                  <entry key="Show.Git.Branches" value="false" />
-                </map>
-              </option>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="master" />
-                      </list>
-                    </value>
-                  </entry>
+                  <entry key="Show.Git.Branches" value="true" />
                 </map>
               </option>
             </State>
@@ -108,7 +178,18 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update project settings" />
-    <option name="LAST_COMMIT_MESSAGE" value="update project settings" />
+    <MESSAGE value="Add: &#10;- packages bank currency and client &#10;- Dto classes&#10;- demo classes HttpDemo, User, UserSettings" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add: &#10;- packages bank currency and client &#10;- Dto classes&#10;- demo classes HttpDemo, User, UserSettings" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Main.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
