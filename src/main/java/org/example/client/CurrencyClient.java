@@ -7,6 +7,7 @@ import org.example.bank.currency.PBCurrency;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.*;
+import org.example.settings.UserSettings;
 
 import static org.example.client.ApplicationConstants.PB_URI;
 import static org.example.client.ApplicationConstants.MONO_URI;
@@ -78,7 +79,7 @@ public class CurrencyClient {
     public List<MonoCurrency> getUserMonoCurrencyRates(UserSettings userSettings) {
         //int dot = Integer.parseInt(userSettings.getDot());
 
-        if (userSettings.getEuro().equals(true) && userSettings.getUsd().equals(false)) {
+        if (userSettings.isEuroEnabled() && userSettings.getUsd().equals(false)) {
             List<MonoCurrency> currencyRates = new CurrencyClient().getMonoCurrencyRates(URI.create(MONO_URI));
             return currencyRates.stream()
                     .filter(s -> s.getCurrencyCodeA() == EUR_CODE && s.getCurrencyCodeB() == UAH_CODE)
@@ -86,13 +87,13 @@ public class CurrencyClient {
                     .toList();
 
         }
-        if (userSettings.getEuro().equals(false) && userSettings.getUsd().equals(true)) {
+        if (!userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<MonoCurrency> currencyRates = new CurrencyClient().getMonoCurrencyRates(URI.create(MONO_URI));
             return currencyRates.stream()
                     .filter(s -> s.getCurrencyCodeA() == USD_CODE && s.getCurrencyCodeB() == UAH_CODE)
                     .toList();
         }
-        if (userSettings.getEuro().equals(true) && userSettings.getUsd().equals(true)) {
+        if (userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<MonoCurrency> currencyRates = new CurrencyClient().getMonoCurrencyRates(URI.create(MONO_URI));
             return currencyRates.stream()
                     .filter(s -> (s.getCurrencyCodeA() == EUR_CODE || s.getCurrencyCodeA() == USD_CODE)
@@ -105,20 +106,20 @@ public class CurrencyClient {
 
     @SneakyThrows
     public List<PBCurrency> getUserPBCurrencyRates(UserSettings userSettings) {
-        if (userSettings.getEuro().equals(true) && userSettings.getUsd().equals(false)) {
+        if (userSettings.isEuroEnabled() && !userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
             return currencyRates.stream()
                     .filter(s -> s.getCcy().equals("EUR"))
                     .toList();
 
         }
-        if (userSettings.getEuro().equals(false) && userSettings.getUsd().equals(true)) {
+        if (!userSettings.isUsdEnabled() && userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
             return currencyRates.stream()
                     .filter(s -> s.getCcy().equals("USD"))
                     .toList();
         }
-        if (userSettings.getEuro().equals(true) && userSettings.getUsd().equals(true)) {
+        if (userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
             return currencyRates;
         }
@@ -127,20 +128,20 @@ public class CurrencyClient {
 
     @SneakyThrows
     public List<NBUCurrency> getUserNBUCurrencyRates(UserSettings userSettings) {
-        if (userSettings.getEuro().equals(true) && userSettings.getUsd().equals(false)) {
+        if (userSettings.isEuroEnabled() && !userSettings.isUsdEnabled()) {
             List<NBUCurrency> currencyRates = new CurrencyClient().getNBUCurrencyRates(URI.create(NBU_URI));
             return currencyRates.stream()
                     .filter(s -> s.getCc().equals("EUR"))
                     .toList();
 
         }
-        if (userSettings.getEuro().equals(false) && userSettings.getUsd().equals(true)) {
+        if (!userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<NBUCurrency> currencyRates = new CurrencyClient().getNBUCurrencyRates(URI.create(NBU_URI));
             return currencyRates.stream()
                     .filter(s -> s.getCc().equals("USD"))
                     .toList();
         }
-        if (userSettings.getEuro().equals(true) && userSettings.getUsd().equals(true)) {
+        if (userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<NBUCurrency> currencyRates = new CurrencyClient().getNBUCurrencyRates(URI.create(NBU_URI));
             return currencyRates.stream()
                     .filter(s -> s.getCc().equals("EUR") || s.getCc().equals("USD"))
