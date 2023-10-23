@@ -1,6 +1,8 @@
 package org.example;
 
 
+import org.example.settings.Settings;
+import org.example.settings.UserSettings;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
@@ -13,6 +15,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 //import com.vdurmont.emoji.EmojiParser;
@@ -36,6 +39,14 @@ public class Main extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         Long chatId = getChatId(update);
+        Settings settings = new Settings();
+        UserSettings userSettings;
+        try {
+            userSettings = settings.getOrCreateUserSettings(chatId);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         if (update.hasMessage() && update.getMessage().getText().equals("/start")) {
             sendImage("eur-usd-dollar-currency", chatId);
             SendMessage message = createMessage(" *Ласкаво просимо!* \n" +
@@ -56,11 +67,15 @@ public class Main extends TelegramLongPollingBot {
             if (update.getCallbackQuery().getData().equals("Get info")) {
                 SendMessage message = createMessage("Дані банка"); // данні банка
                 message.setChatId(chatId);
+                try {
+                    settings.getOrCreateUserSettings(chatId);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 sendApiMethodAsync(message);
             }
 
-        }
-        if (update.hasCallbackQuery()) {
+
             if (update.getCallbackQuery().getData().equals("Setting")) {
 
                 SendMessage message = createMessage("Оберіть налаштування:");
@@ -76,13 +91,14 @@ public class Main extends TelegramLongPollingBot {
 
                 sendApiMethodAsync(message);
             }
-        }
 
-        if (update.hasCallbackQuery()) {
+
             if (update.getCallbackQuery().getData().equals("Dot")) {
                 SendMessage message = createMessage("Оберіть кількість знаків після коми:");
                 message.setChatId(chatId);
 
+                String currentDot = userSettings.getDotCount();
+                //TODO позначати смайлом яка кількість крапок щас у юзера
                 Map<String, String> dotButtons = new LinkedHashMap<>();
                 dotButtons.put("2", "dot_2");
                 dotButtons.put("3", "dot_3");
@@ -92,12 +108,14 @@ public class Main extends TelegramLongPollingBot {
 
                 sendApiMethodAsync(message);
             }
-        }
-        if (update.hasCallbackQuery()) {
+
+
             if (update.getCallbackQuery().getData().equals("Bank")) {
                 SendMessage message = createMessage("Оберіть банк:");
                 message.setChatId(chatId);
 
+                String currentBank = userSettings.getBank();
+                //TODO позначати смайлом який банк щас у юзера
                 Map<String, String> bankButtons = new LinkedHashMap<>();
                 bankButtons.put("НБУ", "bank_nbu");
                 bankButtons.put("Приватбанк", "bank_privat");
@@ -107,11 +125,15 @@ public class Main extends TelegramLongPollingBot {
 
                 sendApiMethodAsync(message);
             }
-        }
-        if (update.hasCallbackQuery()) {
+
+
             if (update.getCallbackQuery().getData().equals("Currency")) {
                 SendMessage message = createMessage("Оберіть валюту:");
                 message.setChatId(chatId);
+
+                boolean currentEuroEnabled = userSettings.isEuroEnabled();
+                boolean currentUsdEnabled = userSettings.isUsdEnabled();
+                //TODO  позначати смайлом які валюти івумкнуті
 
                 Map<String, String> currencyButtons = new LinkedHashMap<>();
                 currencyButtons.put("USD", "USD");
@@ -121,11 +143,14 @@ public class Main extends TelegramLongPollingBot {
 
                 sendApiMethodAsync(message);
             }
-        }
-        if (update.hasCallbackQuery()) {
+
             if (update.getCallbackQuery().getData().equals("Time")) {
                 SendMessage message = createMessage("Оберіть час оповіщення:");
                 message.setChatId(chatId);
+
+                // TODO  позначати смайлом який час увімкнутий у юзера
+                String currentTime = userSettings.getTime();
+
 
                 Map<String, String> timeButtons = new LinkedHashMap<>();
                 timeButtons.put("9", "Time9");
@@ -138,7 +163,11 @@ public class Main extends TelegramLongPollingBot {
                 timeButtons.put("16", "Time16");
                 timeButtons.put("17", "Time17");
                 timeButtons.put("18", "Time18");
-                timeButtons.put("Вимкнути повідомлення", "DisableNotification");
+                if (userSettings.isNotificationEnabled()) {
+                    timeButtons.put("Вимкнути повідомлення", "DisableNotification");
+                } else {
+                    timeButtons.put("Увімкнути повідомлення", "EnableNotification");
+                }
                 attachButtons(message, timeButtons,5);
 
                 sendApiMethodAsync(message);

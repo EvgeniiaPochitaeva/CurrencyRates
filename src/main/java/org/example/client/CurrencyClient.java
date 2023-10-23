@@ -1,49 +1,44 @@
 package org.example.client;
 
-import io.netty.util.internal.MathUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import lombok.SneakyThrows;
 import org.example.bank.currency.MonoCurrency;
 import org.example.bank.currency.NBUCurrency;
 import org.example.bank.currency.PBCurrency;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import lombok.*;
 import org.example.settings.UserSettings;
 
-import static org.example.client.ApplicationConstants.PB_URI;
-import static org.example.client.ApplicationConstants.MONO_URI;
-import static org.example.client.ApplicationConstants.NBU_URI;
-import static org.example.client.ApplicationConstants.EUR_CODE;
-import static org.example.client.ApplicationConstants.USD_CODE;
-import static org.example.client.ApplicationConstants.UAH_CODE;
-
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.List;
 
+import static org.example.client.ApplicationConstants.*;
+
 public class CurrencyClient {
-    private HttpClient httpClient = HttpClient.newHttpClient();
-    private Gson gson = new Gson();
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+    private final Gson gson = new Gson();
 
     @SneakyThrows
-    public List<MonoCurrency> getMonoCurrencyRates(URI uri) {
+    public List<MonoCurrency> getMonoCurrencyRates(URI uri) throws IOException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .GET()
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
         //List<PBCurrency> currencyRates = objectMapper.readValue(response.body(), new TypeReference<List<PBCurrency>>(){});
-        List<MonoCurrency> currencyRates = gson.fromJson(response.body(), new TypeToken<List<MonoCurrency>>() {
-        }.getType());
+
         //currencyRates.forEach(System.out::println);
-        return currencyRates;
+        return gson.fromJson(response.body(), new TypeToken<List<MonoCurrency>>() {
+        }.getType());
     }
 
     @SneakyThrows
-    public List<PBCurrency> getPBCurrencyRates(URI uri) {
+    public List<PBCurrency> getPBCurrencyRates(URI uri) throws IOException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
@@ -51,14 +46,13 @@ public class CurrencyClient {
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         //List<PBCurrency> currencyRates = objectMapper.readValue(response.body(), new TypeReference<List<PBCurrency>>(){});
-        List<PBCurrency> currencyRates = gson.fromJson(response.body(), new TypeToken<List<PBCurrency>>() {
-        }.getType());
         //currencyRates.forEach(System.out::println);
-        return currencyRates;
+        return gson.fromJson(response.body(), new TypeToken<List<PBCurrency>>() {
+        }.getType());
     }
 
     @SneakyThrows
-    public List<NBUCurrency> getNBUCurrencyRates(URI uri) {
+    public List<NBUCurrency> getNBUCurrencyRates(URI uri) throws IOException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
@@ -66,20 +60,19 @@ public class CurrencyClient {
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         //List<PBCurrency> currencyRates = objectMapper.readValue(response.body(), new TypeReference<List<PBCurrency>>(){});
-        List<NBUCurrency> currencyRates = gson.fromJson(response.body(), new TypeToken<List<NBUCurrency>>() {
-        }.getType());
         //currencyRates.forEach(System.out::println);
-        return currencyRates;
+        return gson.fromJson(response.body(), new TypeToken<List<NBUCurrency>>() {
+        }.getType());
     }
 
 
 
     //        if (user.getUserSettings().getBank().equals("Monobank"))
     @SneakyThrows
-    public List<MonoCurrency> getUserMonoCurrencyRates(UserSettings userSettings) {
+    public List<MonoCurrency> getUserMonoCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
         //int dot = Integer.parseInt(userSettings.getDot());
 
-        if (userSettings.isEuroEnabled() && userSettings.getUsd().equals(false)) {
+        if (userSettings.isEuroEnabled() && !userSettings.isEuroEnabled()) {
             List<MonoCurrency> currencyRates = new CurrencyClient().getMonoCurrencyRates(URI.create(MONO_URI));
             return currencyRates.stream()
                     .filter(s -> s.getCurrencyCodeA() == EUR_CODE && s.getCurrencyCodeB() == UAH_CODE)
@@ -105,7 +98,7 @@ public class CurrencyClient {
     }
 
     @SneakyThrows
-    public List<PBCurrency> getUserPBCurrencyRates(UserSettings userSettings) {
+    public List<PBCurrency> getUserPBCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
         if (userSettings.isEuroEnabled() && !userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
             return currencyRates.stream()
@@ -127,7 +120,7 @@ public class CurrencyClient {
     }
 
     @SneakyThrows
-    public List<NBUCurrency> getUserNBUCurrencyRates(UserSettings userSettings) {
+    public List<NBUCurrency> getUserNBUCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
         if (userSettings.isEuroEnabled() && !userSettings.isUsdEnabled()) {
             List<NBUCurrency> currencyRates = new CurrencyClient().getNBUCurrencyRates(URI.create(NBU_URI));
             return currencyRates.stream()

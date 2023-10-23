@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2104bcad-bcbc-47f0-bc7a-0790ea93ef0b" name="Changes" comment="Add: &#10;- packages bank currency and client &#10;- Dto classes&#10;- demo classes HttpDemo, User, UserSettings" />
+    <list default="true" id="2104bcad-bcbc-47f0-bc7a-0790ea93ef0b" name="Changes" comment="update CurrencyClient.java getEuro -&gt; isEuroEnabled and getUsd -&gt; isUsdEnabled">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/MonoCurrency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/MonoCurrency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/NBUCurrency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/NBUCurrency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/PBCurrency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/PBCurrency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/ApplicationConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/ApplicationConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/CurrencyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/CurrencyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/settings/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/settings/Settings.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,12 +55,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "vasylevskyi"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;vasylevskyi&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -62,24 +72,25 @@
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2X4HmJn81RJXg5kWxD179AtkCyx" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Dto",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/eshap/IdeaProjects/BanderogusBot",
-    "onboarding.tips.debug.path": "C:/Users/eshap/IdeaProjects/CurrencyRates/src/main/java/org/example/Main.java"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/eshap/IdeaProjects/BanderogusBot&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/eshap/IdeaProjects/CurrencyRates/src/main/java/org/example/Main.java&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\eshap\IdeaProjects\CurrencyRates\images" />
@@ -126,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697996152526</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="update CurrencyClient.java getEuro -&gt; isEuroEnabled and getUsd -&gt; isUsdEnabled">
+      <option name="closed" value="true" />
+      <created>1698090434468</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1698090434468</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -179,14 +198,15 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add: &#10;- packages bank currency and client &#10;- Dto classes&#10;- demo classes HttpDemo, User, UserSettings" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add: &#10;- packages bank currency and client &#10;- Dto classes&#10;- demo classes HttpDemo, User, UserSettings" />
+    <MESSAGE value="update CurrencyClient.java getEuro -&gt; isEuroEnabled and getUsd -&gt; isUsdEnabled" />
+    <option name="LAST_COMMIT_MESSAGE" value="update CurrencyClient.java getEuro -&gt; isEuroEnabled and getUsd -&gt; isUsdEnabled" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/Main.java</url>
-          <line>13</line>
+          <line>15</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

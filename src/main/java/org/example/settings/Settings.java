@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Settings {
-    public UserSettings getUserSettings(long user) throws IOException {
+    public UserSettings getOrCreateUserSettings(long user) throws IOException {
         JsonReader reader = Json.createReader(new FileReader("userdata.json"));
         JsonObject jsonObject = reader.readObject();
         reader.close();
@@ -82,7 +82,7 @@ public class Settings {
 
 
     private void updateUserData(long user,String key, String value) throws IOException {
-        UserSettings userSettings = getUserSettings(user);
+        UserSettings userSettings = getOrCreateUserSettings(user);
         JsonReader reader = Json.createReader(new FileReader("userdata.json"));
         JsonObject jsonObject = reader.readObject();
         reader.close();
@@ -108,7 +108,7 @@ public class Settings {
     }
 
     private void updateUserData(long user,String key, Boolean value) throws IOException {
-        UserSettings userSettings = getUserSettings(user);
+        UserSettings userSettings = getOrCreateUserSettings(user);
         JsonReader reader = Json.createReader(new FileReader("userdata.json"));
         JsonObject jsonObject = reader.readObject();
         reader.close();

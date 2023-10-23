@@ -1,7 +1,6 @@
 package org.example.client;
 
-import lombok.Builder;
-import lombok.Data;
+
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -12,5 +11,12 @@ public class ApplicationConstants {
     public static final int UAH_CODE = 980;
     public static final int USD_CODE = 840;
     public static final int EUR_CODE = 978;
+
+
+
+    // user settings
+//    public static final String NBU_BANK = "nbu_bank";
+//    public static final String MONO_BANK = "mono_bank";
+//    public static final String PRIVAT_BANK = "privat_bank";
 
 }
