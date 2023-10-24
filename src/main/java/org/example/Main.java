@@ -1,8 +1,10 @@
 package org.example;
 
 
+import org.example.settings.SchedulerCurrency;
 import org.example.settings.Settings;
 import org.example.settings.UserSettings;
+import org.quartz.SchedulerException;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
@@ -21,7 +23,8 @@ import java.util.*;
 
 
 public class Main extends TelegramLongPollingBot {
-    public static void main(String[] args) throws TelegramApiException {
+    public static void main(String[] args) throws TelegramApiException, SchedulerException {
+        SchedulerCurrency.Start();
         TelegramBotsApi api = new TelegramBotsApi(DefaultBotSession.class);
         api.registerBot(new Main());
     }
