@@ -4,18 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2104bcad-bcbc-47f0-bc7a-0790ea93ef0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/CurrencyRates.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/userdata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/settings/SendMessageByTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/settings/SendMessageByTime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/settings/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/settings/Settings.java" afterDir="false" />
+    <list default="true" id="2104bcad-bcbc-47f0-bc7a-0790ea93ef0b" name="Changes" comment="hotFix Settings and create userdata.json">
+      <change afterPath="$PROJECT_DIR$/userdata1.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +152,47 @@
       <option name="project" value="LOCAL" />
       <updated>1698090434468</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="update CurrencyClient.java getEuro -&gt; isEuroEnabled and getUsd -&gt; isUsdEnabled">
+      <option name="closed" value="true" />
+      <created>1698176465654</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1698176465654</updated>
+    </task>
+    <task id="LOCAL-00007" summary="update SendMessageByTime.java">
+      <option name="closed" value="true" />
+      <created>1698176500476</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1698176500476</updated>
+    </task>
+    <task id="LOCAL-00008" summary="hotFix">
+      <option name="closed" value="true" />
+      <created>1698177339973</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1698177339973</updated>
+    </task>
+    <task id="LOCAL-00009" summary="hotFix">
+      <option name="closed" value="true" />
+      <created>1698177349744</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1698177349744</updated>
+    </task>
+    <task id="LOCAL-00010" summary="hotFix Settings and create userdata.json">
+      <option name="closed" value="true" />
+      <created>1698178436523</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1698178436523</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -216,7 +246,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add: &#10;- packages bank currency and client &#10;- Dto classes&#10;- demo classes HttpDemo, User, UserSettings" />
     <MESSAGE value="update CurrencyClient.java getEuro -&gt; isEuroEnabled and getUsd -&gt; isUsdEnabled" />
-    <option name="LAST_COMMIT_MESSAGE" value="update CurrencyClient.java getEuro -&gt; isEuroEnabled and getUsd -&gt; isUsdEnabled" />
+    <MESSAGE value="update SendMessageByTime.java" />
+    <MESSAGE value="hotFix" />
+    <MESSAGE value="hotFix Settings and create userdata.json" />
+    <option name="LAST_COMMIT_MESSAGE" value="hotFix Settings and create userdata.json" />
   </component>
   <component name="com.github.evgenys91.machinet.common.dslhistory.DslHistoryState">
     <option name="historyDtoById">
@@ -259,6 +292,47 @@
             </ChatHistoryModel>
           </value>
         </entry>
+        <entry key="806cea">
+          <value>
+            <ChatHistoryModel>
+              <option name="id" value="806cea" />
+              <option name="initiateTms" value="1698177640949" />
+              <option name="request" value="create json file with name userdata.json, location in root project and contetnt {}" />
+              <option name="response" value="" />
+              <option name="responseDescription" value="To create a JSON file named &quot;userdata.json&quot; with an empty object as its content in the root project directory, you can use the following code snippet:&#10;&#10;```java&#10;import java.io.FileWriter;&#10;import java.io.IOException;&#10;&#10;public class Settings {&#10;    public static void main(String[] args) {&#10;        createUserDataJsonFile();&#10;    }&#10;&#10;    private static void createUserDataJsonFile() {&#10;        String fileName = &quot;userdata.json&quot;;&#10;        String fileContent = &quot;{}&quot;;&#10;&#10;        try (FileWriter fileWriter = new FileWriter(fileName)) {&#10;            fileWriter.write(fileContent);&#10;            System.out.println(&quot;userdata.json file created successfully.&quot;);&#10;        } catch (IOException e) {&#10;            System.out.println(&quot;An error occurred while creating the userdata.json file.&quot;);&#10;            e.printStackTrace();&#10;        }&#10;    }&#10;}&#10;```&#10;&#10;This code defines a method `createUserDataJsonFile()` that uses a `FileWriter` to write the content (`{}`) to the file named &quot;userdata.json&quot;. The file is created in the root project directory. If the file creation is successful, it prints a success message; otherwise, it prints an error message along with the stack trace.&#10;&#10;You can call the `createUserDataJsonFile()` method from the `main()` method or any other appropriate place in your code." />
+              <option name="responseFileName" value="" />
+              <option name="responseFilePath" value="" />
+              <option name="responseTms" value="1698177648009" />
+              <option name="usedLocalFilePaths">
+                <list>
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/UserSettings.java" />
+                  <option value="$PROJECT_DIR$/userdata.json" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/Settings.java" />
+                </list>
+              </option>
+            </ChatHistoryModel>
+          </value>
+        </entry>
+        <entry key="8bd449">
+          <value>
+            <ChatHistoryModel>
+              <option name="id" value="8bd449" />
+              <option name="initiateTms" value="1698178052963" />
+              <option name="request" value="How to fix the following error:&#10;'FileWriter' used without 'try'-with-resources statement" />
+              <option name="response" value="" />
+              <option name="responseDescription" value="To fix the error 'FileWriter' used without 'try'-with-resources statement, you need to use the 'try'-with-resources statement when creating the FileWriter object. This ensures that the FileWriter is automatically closed when it is no longer needed, even if an exception occurs.&#10;&#10;Here's an example of how to fix the error:&#10;&#10;```java&#10;try (FileWriter fileWriter = new FileWriter(&quot;filename.txt&quot;)) {&#10;    // Write to the file using the fileWriter object&#10;    fileWriter.write(&quot;Hello, World!&quot;);&#10;} catch (IOException e) {&#10;    // Handle the exception&#10;    e.printStackTrace();&#10;}&#10;```&#10;&#10;In the above code, the FileWriter object is created within the 'try' block, and it is automatically closed at the end of the block. This eliminates the need for an explicit 'close()' call and ensures that the resources are properly released.&#10;&#10;Make sure to replace &quot;filename.txt&quot; with the actual file path you want to write to. Additionally, you can add your own code within the 'try' block to perform the necessary file writing operations.&#10;&#10;Remember to handle any exceptions that may occur during the file writing process by catching the IOException or any other relevant exceptions." />
+              <option name="responseFileName" value="" />
+              <option name="responseFilePath" value="" />
+              <option name="responseTms" value="1698178057726" />
+              <option name="usedLocalFilePaths">
+                <list>
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/UserSettings.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/Settings.java" />
+                </list>
+              </option>
+            </ChatHistoryModel>
+          </value>
+        </entry>
         <entry key="a1e486">
           <value>
             <ChatHistoryModel>
@@ -273,6 +347,26 @@
               <option name="usedLocalFilePaths">
                 <list>
                   <option value="$PROJECT_DIR$/build.gradle.kts" />
+                </list>
+              </option>
+            </ChatHistoryModel>
+          </value>
+        </entry>
+        <entry key="ad91b1">
+          <value>
+            <ChatHistoryModel>
+              <option name="id" value="ad91b1" />
+              <option name="initiateTms" value="1698177591763" />
+              <option name="request" value="create json file " />
+              <option name="response" value="" />
+              <option name="responseDescription" value="Sure, I can help you create a JSON file. Could you please provide me with the desired name and location for the file?" />
+              <option name="responseFileName" value="" />
+              <option name="responseFilePath" value="" />
+              <option name="responseTms" value="1698177594142" />
+              <option name="usedLocalFilePaths">
+                <list>
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/UserSettings.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/Settings.java" />
                 </list>
               </option>
             </ChatHistoryModel>

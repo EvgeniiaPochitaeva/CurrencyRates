@@ -31,7 +31,7 @@ public class SendMessageByTime implements Job {
 
         Settings settings = new Settings();
         for (String user : users) {
-            try {
+
                 UserSettings userSettings = settings.getOrCreateUserSettings(Long.parseLong(user));
 
                 String currentBank = userSettings.getBank();
@@ -46,9 +46,7 @@ public class SendMessageByTime implements Job {
                     //TODO message.setChatId(user)   -   тут айді це user в For
 
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+
         }
     }
 }
