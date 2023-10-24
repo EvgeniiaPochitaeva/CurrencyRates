@@ -1,8 +1,10 @@
 package org.example.settings;
 
 
+import lombok.SneakyThrows;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+
 
 public class SchedulerCurrency {
     public static void Start() throws SchedulerException {

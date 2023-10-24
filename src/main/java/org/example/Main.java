@@ -1,8 +1,10 @@
 package org.example;
 
 
+import org.example.settings.SchedulerCurrency;
 import org.example.settings.Settings;
 import org.example.settings.UserSettings;
+import org.quartz.SchedulerException;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
@@ -21,7 +23,8 @@ import java.util.*;
 
 
 public class Main extends TelegramLongPollingBot {
-    public static void main(String[] args) throws TelegramApiException {
+    public static void main(String[] args) throws TelegramApiException, SchedulerException {
+        SchedulerCurrency.Start();
         TelegramBotsApi api = new TelegramBotsApi(DefaultBotSession.class);
         api.registerBot(new Main());
     }
@@ -38,15 +41,15 @@ public class Main extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+
         Long chatId = getChatId(update);
+        System.out.println("chatId = " + chatId);
         String emodji = "✅";
         Settings settings = new Settings();
         UserSettings userSettings;
-        try {
+
             userSettings = settings.getOrCreateUserSettings(chatId);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
 
         if (update.hasMessage() && update.getMessage().getText().equals("/start")) {
             sendImage("eur-usd-dollar-currency", chatId);
@@ -68,11 +71,9 @@ public class Main extends TelegramLongPollingBot {
             if (update.getCallbackQuery().getData().equals("Get info")) {
                 SendMessage message = createMessage("Дані банка"); // данні банка
                 message.setChatId(chatId);
-                try {
+
                     settings.getOrCreateUserSettings(chatId);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+
                 sendApiMethodAsync(message);
             }
 
@@ -99,6 +100,8 @@ public class Main extends TelegramLongPollingBot {
                 message.setChatId(chatId);
 
                 String currentDot = userSettings.getDotCount();
+
+
                 //TODO позначати смайлом яка кількість крапок щас у юзера -  зробила!!
                 Map<String, String> dotButtons = new LinkedHashMap<>();
                 if (currentDot.equals("2")) {
