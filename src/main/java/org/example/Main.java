@@ -132,15 +132,18 @@ public class Main extends TelegramLongPollingBot {
                 //TODO позначати смайлом який банк щас у юзера -  зробила!!
                 Map<String, String> bankButtons = new LinkedHashMap<>();
 
-                if (currentBank.equals("НБУ")) {
+                //    NBU_BANK = "nbu_bank";
+                //    MONO_BANK = "mono_bank";
+                //    PRIVAT_BANK = "privat_bank";
+                if (currentBank.equals("nbu_bank")) {
                     bankButtons.put("НБУ " + emodji, "bank_nbu");
                     bankButtons.put("Приватбанк ", "bank_privat");
                     bankButtons.put("Монобанк", "bank_mono");
-                } else if (currentBank.equals("Приватбанк")) {
+                } else if (currentBank.equals("privat_bank")) {
                     bankButtons.put("НБУ ", "bank_nbu");
                     bankButtons.put("Приватбанк " + emodji, "bank_privat");
                     bankButtons.put("Монобанк ", "bank_mono");
-                } else if (currentBank.equals("Монобанк")) {
+                } else if (currentBank.equals("mono_bank")) {
                     bankButtons.put("НБУ ", "bank_nbu");
                     bankButtons.put("Приватбанк ", "bank_privat");
                     bankButtons.put("Монобанк " + emodji, "bank_mono");
