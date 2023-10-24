@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-//import com.vdurmont.emoji.EmojiParser;
+
 
 public class Main extends TelegramLongPollingBot {
     public static void main(String[] args) throws TelegramApiException {
@@ -39,6 +39,7 @@ public class Main extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         Long chatId = getChatId(update);
+        String emodji = "✅";
         Settings settings = new Settings();
         UserSettings userSettings;
         try {
@@ -98,11 +99,21 @@ public class Main extends TelegramLongPollingBot {
                 message.setChatId(chatId);
 
                 String currentDot = userSettings.getDotCount();
-                //TODO позначати смайлом яка кількість крапок щас у юзера
+                //TODO позначати смайлом яка кількість крапок щас у юзера -  зробила!!
                 Map<String, String> dotButtons = new LinkedHashMap<>();
-                dotButtons.put("2", "dot_2");
-                dotButtons.put("3", "dot_3");
-                dotButtons.put("4", "dot_4");
+                if (currentDot.equals("2")) {
+                    dotButtons.put("2 " + emodji, "dot_2");
+                    dotButtons.put("3", "dot_3");
+                    dotButtons.put("4", "dot_4");
+                } else if (currentDot.equals("3")) {
+                    dotButtons.put("2", "dot_2");
+                    dotButtons.put("3 " + emodji, "dot_3");
+                    dotButtons.put("4", "dot_4");
+                } else if (currentDot.equals("4")) {
+                    dotButtons.put("2", "dot_2");
+                    dotButtons.put("3", "dot_3");
+                    dotButtons.put("4 " + emodji, "dot_4");
+                }
 
                 attachButtons(message, dotButtons,3);
 
@@ -115,11 +126,22 @@ public class Main extends TelegramLongPollingBot {
                 message.setChatId(chatId);
 
                 String currentBank = userSettings.getBank();
-                //TODO позначати смайлом який банк щас у юзера
+                //TODO позначати смайлом який банк щас у юзера -  зробила!!
                 Map<String, String> bankButtons = new LinkedHashMap<>();
-                bankButtons.put("НБУ", "bank_nbu");
-                bankButtons.put("Приватбанк", "bank_privat");
-                bankButtons.put("Монобанк", "bank_mono");
+
+                if (currentBank.equals("НБУ")) {
+                    bankButtons.put("НБУ " + emodji, "bank_nbu");
+                    bankButtons.put("Приватбанк ", "bank_privat");
+                    bankButtons.put("Монобанк", "bank_mono");
+                } else if (currentBank.equals("Приватбанк")) {
+                    bankButtons.put("НБУ ", "bank_nbu");
+                    bankButtons.put("Приватбанк " + emodji, "bank_privat");
+                    bankButtons.put("Монобанк ", "bank_mono");
+                } else if (currentBank.equals("Монобанк")) {
+                    bankButtons.put("НБУ ", "bank_nbu");
+                    bankButtons.put("Приватбанк ", "bank_privat");
+                    bankButtons.put("Монобанк " + emodji, "bank_mono");
+                }
 
                 attachButtons(message, bankButtons,3);
 
@@ -133,11 +155,14 @@ public class Main extends TelegramLongPollingBot {
 
                 boolean currentEuroEnabled = userSettings.isEuroEnabled();
                 boolean currentUsdEnabled = userSettings.isUsdEnabled();
-                //TODO  позначати смайлом які валюти івумкнуті
+                //TODO  позначати смайлом які валюти івумкнуті -  зробила!!
 
                 Map<String, String> currencyButtons = new LinkedHashMap<>();
-                currencyButtons.put("USD", "USD");
-                currencyButtons.put("EURO", "EURO");
+                String euroText = "EURO " + (currentEuroEnabled ? emodji : "");
+                String usdText = "USD " + (currentUsdEnabled ? emodji : "");
+
+                currencyButtons.put(euroText, "EURO");
+                currencyButtons.put(usdText, "USD");
 
                 attachButtons(message, currencyButtons,2);
 
@@ -148,25 +173,26 @@ public class Main extends TelegramLongPollingBot {
                 SendMessage message = createMessage("Оберіть час оповіщення:");
                 message.setChatId(chatId);
 
-                // TODO  позначати смайлом який час увімкнутий у юзера
+                // TODO  позначати смайлом який час увімкнутий у юзера -  зробила!!
                 String currentTime = userSettings.getTime();
 
 
                 Map<String, String> timeButtons = new LinkedHashMap<>();
-                timeButtons.put("9", "Time9");
-                timeButtons.put("10", "Time10");
-                timeButtons.put("11", "Time11");
-                timeButtons.put("12", "Time12");
-                timeButtons.put("13", "Time13");
-                timeButtons.put("14", "Time14");
-                timeButtons.put("15", "Time15");
-                timeButtons.put("16", "Time16");
-                timeButtons.put("17", "Time17");
-                timeButtons.put("18", "Time18");
+                timeButtons.put("9 " + (currentTime.equals("9") ? emodji : ""), "Time9");
+                timeButtons.put("10 " + (currentTime.equals("10") ? emodji : ""), "Time10");
+                timeButtons.put("11 " + (currentTime.equals("11") ? emodji : ""), "Time11");
+                timeButtons.put("12 " + (currentTime.equals("12") ? emodji : ""), "Time12");
+                timeButtons.put("13 " + (currentTime.equals("13") ? emodji : ""), "Time13");
+                timeButtons.put("14 " + (currentTime.equals("14") ? emodji : ""), "Time14");
+                timeButtons.put("15 " + (currentTime.equals("15") ? emodji : ""), "Time15");
+                timeButtons.put("16 " + (currentTime.equals("16") ? emodji : ""), "Time16");
+                timeButtons.put("17 " + (currentTime.equals("17") ? emodji : ""), "Time17");
+                timeButtons.put("18 " + (currentTime.equals("18") ? emodji : ""), "Time18");
+
                 if (userSettings.isNotificationEnabled()) {
-                    timeButtons.put("Вимкнути повідомлення", "DisableNotification");
+                    timeButtons.put("Вимкнути повідомлення " + emodji, "DisableNotification");
                 } else {
-                    timeButtons.put("Увімкнути повідомлення", "EnableNotification");
+                    timeButtons.put("Увімкнути повідомлення " + emodji, "EnableNotification");
                 }
                 attachButtons(message, timeButtons,5);
 
