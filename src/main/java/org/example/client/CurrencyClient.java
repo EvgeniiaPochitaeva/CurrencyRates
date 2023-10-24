@@ -29,10 +29,6 @@ public class CurrencyClient {
                 .GET()
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-        //List<PBCurrency> currencyRates = objectMapper.readValue(response.body(), new TypeReference<List<PBCurrency>>(){});
-
-        //currencyRates.forEach(System.out::println);
         return gson.fromJson(response.body(), new TypeToken<List<MonoCurrency>>() {
         }.getType());
     }
@@ -45,8 +41,6 @@ public class CurrencyClient {
                 .GET()
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        //List<PBCurrency> currencyRates = objectMapper.readValue(response.body(), new TypeReference<List<PBCurrency>>(){});
-        //currencyRates.forEach(System.out::println);
         return gson.fromJson(response.body(), new TypeToken<List<PBCurrency>>() {
         }.getType());
     }
@@ -59,39 +53,50 @@ public class CurrencyClient {
                 .GET()
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        //List<PBCurrency> currencyRates = objectMapper.readValue(response.body(), new TypeReference<List<PBCurrency>>(){});
-        //currencyRates.forEach(System.out::println);
         return gson.fromJson(response.body(), new TypeToken<List<NBUCurrency>>() {
         }.getType());
     }
+    private static List<MonoCurrency> roundMonoCurrency(List<MonoCurrency> currencyRates, int dotCount) {
+        currencyRates.forEach(s -> s.setRateBuy(Math.round(s.getRateBuy() * Math.pow(10, dotCount)) / Math.pow(10, dotCount)));
+        currencyRates.forEach(s -> s.setRateSell(Math.round(s.getRateSell() * Math.pow(10, dotCount)) / Math.pow(10, dotCount)));
+        return currencyRates;
+    }
 
+    private static List<PBCurrency> roundPBCurrency(List<PBCurrency> currencyRates, int dotCount) {
+        currencyRates.forEach(s -> s.setBuy(String.valueOf(Math.round(Double.parseDouble(s.getBuy()) * Math.pow(10, dotCount)) / Math.pow(10, dotCount))));
+        currencyRates.forEach(s -> s.setSale(String.valueOf(Math.round(Double.parseDouble(s.getSale()) * Math.pow(10, dotCount)) / Math.pow(10, dotCount))));
+        return currencyRates;
+    }
+    private static List<NBUCurrency> roundNBUCurrency(List<NBUCurrency> currencyRates, int dotCount) {
+        currencyRates.forEach(s -> s.setRate(Math.round(s.getRate() * Math.pow(10, dotCount)) / Math.pow(10, dotCount)));
+        return currencyRates;
+    }
 
-
-    //        if (user.getUserSettings().getBank().equals("Monobank"))
     @SneakyThrows
     public List<MonoCurrency> getUserMonoCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
-        //int dot = Integer.parseInt(userSettings.getDot());
+        int dotCount = Integer.parseInt(userSettings.getDotCount());
 
         if (userSettings.isEuroEnabled() && !userSettings.isEuroEnabled()) {
             List<MonoCurrency> currencyRates = new CurrencyClient().getMonoCurrencyRates(URI.create(MONO_URI));
-            return currencyRates.stream()
+            List<MonoCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> s.getCurrencyCodeA() == EUR_CODE && s.getCurrencyCodeB() == UAH_CODE)
-                    //.map(s -> Math.round(s.getRateSell(), dot))
                     .toList();
+            return CurrencyClient.roundMonoCurrency(userCurrencyRates, dotCount);
 
         }
         if (!userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<MonoCurrency> currencyRates = new CurrencyClient().getMonoCurrencyRates(URI.create(MONO_URI));
-            return currencyRates.stream()
+            List<MonoCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> s.getCurrencyCodeA() == USD_CODE && s.getCurrencyCodeB() == UAH_CODE)
                     .toList();
+            return CurrencyClient.roundMonoCurrency(userCurrencyRates, dotCount);
         }
         if (userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<MonoCurrency> currencyRates = new CurrencyClient().getMonoCurrencyRates(URI.create(MONO_URI));
-            return currencyRates.stream()
-                    .filter(s -> (s.getCurrencyCodeA() == EUR_CODE || s.getCurrencyCodeA() == USD_CODE)
-                            && s.getCurrencyCodeB() == UAH_CODE)
+            List<MonoCurrency> userCurrencyRates = currencyRates.stream()
+                    .filter(s -> (s.getCurrencyCodeA() == EUR_CODE || s.getCurrencyCodeA() == USD_CODE) && s.getCurrencyCodeB() == UAH_CODE)
                     .toList();
+            return CurrencyClient.roundMonoCurrency(userCurrencyRates, dotCount);
         }
         return null;
 
@@ -99,79 +104,54 @@ public class CurrencyClient {
 
     @SneakyThrows
     public List<PBCurrency> getUserPBCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
+        int dotCount = Integer.parseInt(userSettings.getDotCount());
         if (userSettings.isEuroEnabled() && !userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
-            return currencyRates.stream()
+            List<PBCurrency> roundedCurrencyRates = CurrencyClient.roundPBCurrency(currencyRates, dotCount);
+            return roundedCurrencyRates.stream()
                     .filter(s -> s.getCcy().equals("EUR"))
                     .toList();
-
         }
         if (!userSettings.isUsdEnabled() && userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
-            return currencyRates.stream()
+            List<PBCurrency> roundedCurrencyRates = CurrencyClient.roundPBCurrency(currencyRates, dotCount);
+            return roundedCurrencyRates.stream()
                     .filter(s -> s.getCcy().equals("USD"))
                     .toList();
         }
         if (userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
-            return currencyRates;
+            return CurrencyClient.roundPBCurrency(currencyRates, dotCount);
         }
         return null;
     }
 
     @SneakyThrows
     public List<NBUCurrency> getUserNBUCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
+        int dotCount = Integer.parseInt(userSettings.getDotCount());
         if (userSettings.isEuroEnabled() && !userSettings.isUsdEnabled()) {
             List<NBUCurrency> currencyRates = new CurrencyClient().getNBUCurrencyRates(URI.create(NBU_URI));
-            return currencyRates.stream()
+            List<NBUCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> s.getCc().equals("EUR"))
                     .toList();
-
+            return CurrencyClient.roundNBUCurrency(userCurrencyRates, dotCount);
         }
         if (!userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<NBUCurrency> currencyRates = new CurrencyClient().getNBUCurrencyRates(URI.create(NBU_URI));
-            return currencyRates.stream()
+            List<NBUCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> s.getCc().equals("USD"))
                     .toList();
+            return CurrencyClient.roundNBUCurrency(userCurrencyRates, dotCount);
         }
         if (userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<NBUCurrency> currencyRates = new CurrencyClient().getNBUCurrencyRates(URI.create(NBU_URI));
-            return currencyRates.stream()
+            List<NBUCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> s.getCc().equals("EUR") || s.getCc().equals("USD"))
                     .toList();
+            return CurrencyClient.roundNBUCurrency(userCurrencyRates, dotCount);
         }
         return null;
 
     }
 }
-
-/*    @SneakyThrows
-    public List<PBCurrency> getMonoCurrencyRate (URI uri) {
-
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(uri)
-                .GET()
-                .build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        //List<PBCurrency> currencyRates = objectMapper.readValue(response.body(), new TypeReference<List<PBCurrency>>(){});
-        List<PBCurrency> currencyRates = gson.fromJson(response.body(), new TypeToken<List<PBCurrency>>(){}.getType());
-        currencyRates.forEach(System.out::println);
-        return currencyRates;
-    }
-
-    @SneakyThrows
-    public List<PBCurrency> getNBUCurrencyRate (URI uri) {
-
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(uri)
-                .GET()
-                .build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        //List<PBCurrency> currencyRates = objectMapper.readValue(response.body(), new TypeReference<List<PBCurrency>>(){});
-        List<PBCurrency> currencyRates = gson.fromJson(response.body(), new TypeToken<List<PBCurrency>>(){}.getType());
-        currencyRates.forEach(System.out::println);
-        return currencyRates;
-    }*/
 
