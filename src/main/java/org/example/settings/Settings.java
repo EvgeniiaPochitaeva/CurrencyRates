@@ -1,19 +1,34 @@
 package org.example.settings;
 
+import lombok.SneakyThrows;
+
 import javax.json.*;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class Settings {
-    public UserSettings getOrCreateUserSettings(long user) throws IOException {
+    @SneakyThrows
+    public UserSettings getOrCreateUserSettings(long user) {
+        File file = new File("userdata.json");
+        if (!file.exists()) {
+
+            try (FileWriter fileWriter = new FileWriter("userdata.json")) {
+                fileWriter.write("{}");
+            } catch (IOException e) {
+                throw new IOException();
+            }
+        }
+
+
+
+
         JsonReader reader = Json.createReader(new FileReader("userdata.json"));
         JsonObject jsonObject = reader.readObject();
         reader.close();
         if (jsonObject.getJsonObject(String.valueOf(user)) != null) {
-
             JsonObject userData = jsonObject.getJsonObject(String.valueOf(user));
-
             UserSettings userSettings = new UserSettings();
             userSettings.setBank(userData.getString("bank"));
             userSettings.setEuroEnabled(userData.getBoolean("euro"));
@@ -28,8 +43,8 @@ public class Settings {
         }
 
     }
-
-    private UserSettings createUserSettings(long user) throws IOException {
+    @SneakyThrows
+    private UserSettings createUserSettings(long user) {
 
         JsonReader reader = Json.createReader(new FileReader("userdata.json"));
         JsonObject jsonObject = reader.readObject();
@@ -64,24 +79,34 @@ public class Settings {
         return defaultUserSettings;
     }
 
-    public void updateBank(long user, String bank) throws IOException {
+
+    @SneakyThrows
+    public void updateBank(long user, String bank) {
         updateUserData(user, "bank", bank);
     }
-    public void updateCurrency(long user, String currency, boolean setEnabled) throws IOException {
+
+    @SneakyThrows
+    public void updateCurrency(long user, String currency, boolean setEnabled) {
         updateUserData(user, currency, setEnabled);
     }
-    public void updateTime(long user, String time) throws IOException {
+
+    @SneakyThrows
+    public void updateTime(long user, String time) {
         updateUserData(user, "time", time);
     }
-    public void updateDot(long user, int dot) throws IOException {
+
+    @SneakyThrows
+    public void updateDot(long user, int dot) {
         updateUserData(user, "dot", String.valueOf(dot));
     }
-    public void updateNotification(long user, boolean setEnabled) throws IOException {
+
+    @SneakyThrows
+    public void updateNotification(long user, boolean setEnabled) {
         updateUserData(user, "notification", setEnabled);
     }
 
-
-    private void updateUserData(long user,String key, String value) throws IOException {
+    @SneakyThrows
+    private void updateUserData(long user,String key, String value){
         UserSettings userSettings = getOrCreateUserSettings(user);
         JsonReader reader = Json.createReader(new FileReader("userdata.json"));
         JsonObject jsonObject = reader.readObject();
@@ -107,7 +132,9 @@ public class Settings {
 
     }
 
-    private void updateUserData(long user,String key, Boolean value) throws IOException {
+    @SneakyThrows
+
+    private void updateUserData(long user,String key, Boolean value) {
         UserSettings userSettings = getOrCreateUserSettings(user);
         JsonReader reader = Json.createReader(new FileReader("userdata.json"));
         JsonObject jsonObject = reader.readObject();

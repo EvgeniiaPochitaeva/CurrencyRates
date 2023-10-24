@@ -44,11 +44,9 @@ public class Main extends TelegramLongPollingBot {
         String emodji = "✅";
         Settings settings = new Settings();
         UserSettings userSettings;
-        try {
+
             userSettings = settings.getOrCreateUserSettings(chatId);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
 
         if (update.hasMessage() && update.getMessage().getText().equals("/start")) {
             sendImage("eur-usd-dollar-currency", chatId);
@@ -70,11 +68,9 @@ public class Main extends TelegramLongPollingBot {
             if (update.getCallbackQuery().getData().equals("Get info")) {
                 SendMessage message = createMessage("Дані банка"); // данні банка
                 message.setChatId(chatId);
-                try {
+
                     settings.getOrCreateUserSettings(chatId);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+
                 sendApiMethodAsync(message);
             }
 
