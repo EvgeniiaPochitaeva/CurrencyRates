@@ -36,10 +36,10 @@ public class Settings {
         reader.close();
 
         JsonObject newValue = Json.createObjectBuilder()
-                .add("bank", "monobank")
+                .add("bank", "privat_bank")
                 .add("usd", true)
                 .add("euro", false)
-                .add("time", "5")
+                .add("time", "p")
                 .add("dot", "2")
                 .add("notification", true)
                 .build();
@@ -54,7 +54,7 @@ public class Settings {
         writer.close();
 
         UserSettings defaultUserSettings = new UserSettings();
-        defaultUserSettings.setBank("monobank");
+        defaultUserSettings.setBank("privat_bank");
         defaultUserSettings.setTime("9");
         defaultUserSettings.setUsdEnabled(true);
         defaultUserSettings.setEuroEnabled(false);

@@ -14,8 +14,8 @@ import java.util.Set;
 
 public class SendMessageByTime implements Job {
     public void execute(JobExecutionContext context) {
-        LocalTime currentTime = LocalTime.now();
-        String currentHour = String.valueOf(currentTime.getHour());
+        LocalTime time = LocalTime.now();
+        String currentHour = String.valueOf(time.getHour());
 
         JsonReader reader;
         try {
@@ -30,13 +30,22 @@ public class SendMessageByTime implements Job {
         Set<String> users = jsonObject.keySet();
 
         Settings settings = new Settings();
-        for(String user : users) {
+        for (String user : users) {
             try {
-                UserSettings userSettings = settings.getUserSettings(Long.parseLong(user));
-                String userTime = userSettings.getTime();
-                if (userSettings.isNotificationEnabled() & currentHour.contains(userTime)) {
+                UserSettings userSettings = settings.getOrCreateUserSettings(Long.parseLong(user));
+
+                String currentBank = userSettings.getBank();
+                String currentDot = userSettings.getDotCount();
+                boolean currentEuroEnabled = userSettings.isEuroEnabled();
+                boolean currentUsdEnabled = userSettings.isUsdEnabled();
+                String currentTime = userSettings.getTime();
+
+                if (userSettings.isNotificationEnabled() & currentHour.contains(currentTime)) {
                     System.out.println("Test done");
-                    //TODO тут треба реалізувати відправку повідомлення
+                    //TODO тут ми проходим по кожному юзера і дивимося, якщо зараз такеж время яке у юзера в налаштуваннях то треба запросити курс валют відповідно до налаштувань, після відправити це юзеру
+
+                    //TODO message.setChatId(user)   -   тут айді це user в For
+
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);

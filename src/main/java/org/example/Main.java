@@ -38,7 +38,9 @@ public class Main extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+
         Long chatId = getChatId(update);
+        System.out.println("chatId = " + chatId);
         String emodji = "✅";
         Settings settings = new Settings();
         UserSettings userSettings;
@@ -99,6 +101,8 @@ public class Main extends TelegramLongPollingBot {
                 message.setChatId(chatId);
 
                 String currentDot = userSettings.getDotCount();
+
+
                 //TODO позначати смайлом яка кількість крапок щас у юзера -  зробила!!
                 Map<String, String> dotButtons = new LinkedHashMap<>();
                 if (currentDot.equals("2")) {
