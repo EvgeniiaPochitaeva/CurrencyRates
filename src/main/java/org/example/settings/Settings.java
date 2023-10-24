@@ -39,7 +39,7 @@ public class Settings {
                 .add("bank", "privat_bank")
                 .add("usd", true)
                 .add("euro", false)
-                .add("time", "p")
+                .add("time", "9")
                 .add("dot", "2")
                 .add("notification", true)
                 .build();
