@@ -51,4 +51,9 @@ public class NBUCurrency {
     public void setExchangedate(String exchangedate) {
         this.exchangedate = exchangedate;
     }
+    @Override
+    public String toString() {
+        return "Курс НБУ " + cc + "/UAH: " + rate + "\n";
+    }
+
 }

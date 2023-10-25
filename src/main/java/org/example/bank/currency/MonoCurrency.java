@@ -60,4 +60,18 @@ public class MonoCurrency {
     public void setRateCross(Double rateCross) {
         this.rateCross = rateCross;
     }
+    @Override
+    public String toString() {
+        if (currencyCodeA == 840) {
+            return "Курс Монобанк: USD/UAH" + "\n" +
+                    "Покупка: " + rateBuy + "\n" +
+                    "Продаж:  " + rateSell + "\n";
+        }
+        if (currencyCodeA == 978) {
+            return "Курс Монобанк: EUR/UAH" + "\n" +
+                    "Покупка: " + rateBuy + "\n" +
+                    "Продаж:  " + rateSell + "\n";
+        }
+        return "-1";
+    }
 }

@@ -14,6 +14,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.example.client.ApplicationConstants.*;
 
@@ -73,7 +74,7 @@ public class CurrencyClient {
     }
 
     @SneakyThrows
-    public List<MonoCurrency> getUserMonoCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
+    public String getUserMonoCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
         int dotCount = Integer.parseInt(userSettings.getDotCount());
 
         if (userSettings.isEuroEnabled() && !userSettings.isEuroEnabled()) {
@@ -81,7 +82,9 @@ public class CurrencyClient {
             List<MonoCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> s.getCurrencyCodeA() == EUR_CODE && s.getCurrencyCodeB() == UAH_CODE)
                     .toList();
-            return CurrencyClient.roundMonoCurrency(userCurrencyRates, dotCount);
+            return CurrencyClient.roundMonoCurrency(userCurrencyRates, dotCount).stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining("\n"));
 
         }
         if (!userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
@@ -89,68 +92,82 @@ public class CurrencyClient {
             List<MonoCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> s.getCurrencyCodeA() == USD_CODE && s.getCurrencyCodeB() == UAH_CODE)
                     .toList();
-            return CurrencyClient.roundMonoCurrency(userCurrencyRates, dotCount);
+            return CurrencyClient.roundMonoCurrency(userCurrencyRates, dotCount).stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining("\n"));
         }
         if (userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<MonoCurrency> currencyRates = new CurrencyClient().getMonoCurrencyRates(URI.create(MONO_URI));
             List<MonoCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> (s.getCurrencyCodeA() == EUR_CODE || s.getCurrencyCodeA() == USD_CODE) && s.getCurrencyCodeB() == UAH_CODE)
                     .toList();
-            return CurrencyClient.roundMonoCurrency(userCurrencyRates, dotCount);
+            return CurrencyClient.roundMonoCurrency(userCurrencyRates, dotCount).stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining("\n"));
         }
-        return null;
+        return "-1";
 
     }
 
     @SneakyThrows
-    public List<PBCurrency> getUserPBCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
+    public String getUserPBCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
         int dotCount = Integer.parseInt(userSettings.getDotCount());
         if (userSettings.isEuroEnabled() && !userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
             List<PBCurrency> roundedCurrencyRates = CurrencyClient.roundPBCurrency(currencyRates, dotCount);
             return roundedCurrencyRates.stream()
                     .filter(s -> s.getCcy().equals("EUR"))
-                    .toList();
+                    .map(Object::toString)
+                    .collect(Collectors.joining("\n"));
         }
         if (!userSettings.isUsdEnabled() && userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
             List<PBCurrency> roundedCurrencyRates = CurrencyClient.roundPBCurrency(currencyRates, dotCount);
             return roundedCurrencyRates.stream()
                     .filter(s -> s.getCcy().equals("USD"))
-                    .toList();
+                    .map(Object::toString)
+                    .collect(Collectors.joining("\n"));
         }
         if (userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
-            return CurrencyClient.roundPBCurrency(currencyRates, dotCount);
+            return CurrencyClient.roundPBCurrency(currencyRates, dotCount).stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining("\n"));
         }
-        return null;
+        return "-1";
     }
 
     @SneakyThrows
-    public List<NBUCurrency> getUserNBUCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
+    public String getUserNBUCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
         int dotCount = Integer.parseInt(userSettings.getDotCount());
         if (userSettings.isEuroEnabled() && !userSettings.isUsdEnabled()) {
             List<NBUCurrency> currencyRates = new CurrencyClient().getNBUCurrencyRates(URI.create(NBU_URI));
             List<NBUCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> s.getCc().equals("EUR"))
                     .toList();
-            return CurrencyClient.roundNBUCurrency(userCurrencyRates, dotCount);
+            return CurrencyClient.roundNBUCurrency(userCurrencyRates, dotCount).stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining("\n"));
         }
         if (!userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<NBUCurrency> currencyRates = new CurrencyClient().getNBUCurrencyRates(URI.create(NBU_URI));
             List<NBUCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> s.getCc().equals("USD"))
                     .toList();
-            return CurrencyClient.roundNBUCurrency(userCurrencyRates, dotCount);
+            return CurrencyClient.roundNBUCurrency(userCurrencyRates, dotCount).stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining("\n"));
         }
         if (userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<NBUCurrency> currencyRates = new CurrencyClient().getNBUCurrencyRates(URI.create(NBU_URI));
             List<NBUCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> s.getCc().equals("EUR") || s.getCc().equals("USD"))
                     .toList();
-            return CurrencyClient.roundNBUCurrency(userCurrencyRates, dotCount);
+            return CurrencyClient.roundNBUCurrency(userCurrencyRates, dotCount).stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining("\n"));
         }
-        return null;
+        return "-1";
 
     }
 }
