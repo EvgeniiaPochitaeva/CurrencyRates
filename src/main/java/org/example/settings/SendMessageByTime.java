@@ -42,8 +42,11 @@ public class SendMessageByTime implements Job {
 
                 if (userSettings.isNotificationEnabled() & currentHour.contains(currentTime)) {
                     System.out.println("Test done");
-                    //TODO тут ми проходим по кожному юзера і дивимося, якщо зараз такеж время яке у юзера в налаштуваннях то треба запросити курс валют відповідно до налаштувань, після відправити це юзеру
+                    //TODO тут ми проходим по кожному юзера і дивимося, якщо зараз такеж время яке у юзера
+                    // в налаштуваннях то треба запросити курс валют відповідно до налаштувань, після відправити це юзеру
                     //TODO message.setChatId(user)   -   тут айді це user в For
+
+
 
                 }
 

@@ -44,6 +44,7 @@ public class Main extends TelegramLongPollingBot {
         return "6834411073:AAEIUv86SUhblfrDBWoZTKUaKDgcOis_npM";
     }
 
+
     @Override
     public void onUpdateReceived(Update update) {
 
@@ -53,8 +54,7 @@ public class Main extends TelegramLongPollingBot {
         Settings settings = new Settings();
         CurrencyClient currencyClient = new CurrencyClient();
         UserSettings userSettings;
-
-            userSettings = settings.getOrCreateUserSettings(chatId);
+        userSettings = settings.getOrCreateUserSettings(chatId);
 
 
         if (update.hasMessage() && update.getMessage().getText().equals("/start")) {
@@ -88,6 +88,11 @@ public class Main extends TelegramLongPollingBot {
 
                 SendMessage message = createMessage(result); // данні банка
                 message.setChatId(chatId);
+                Map<String, String> buttons = new LinkedHashMap<>();
+                buttons.put("Отримати інфо", "Get info");
+                buttons.put("Налаштування", "Setting");
+
+                attachButtons(message, buttons,2);
 
 
                 sendApiMethodAsync(message);
@@ -102,7 +107,7 @@ public class Main extends TelegramLongPollingBot {
                 Map<String, String> settingButtons = new LinkedHashMap<>();
                 settingButtons.put("Валюта", "Currency");
                 settingButtons.put("Банк", "Bank");
-                settingButtons.put("Кількість знаків після коми", "Dot");
+                settingButtons.put("Кількість знаків \n" + "після коми", "Dot");
                 settingButtons.put("Час оповіщення", "Time");
 
                 attachButtons(message, settingButtons,2);
@@ -120,6 +125,7 @@ public class Main extends TelegramLongPollingBot {
 
                 //TODO позначати смайлом яка кількість крапок щас у юзера -  зробила!!
                 Map<String, String> dotButtons = new LinkedHashMap<>();
+
                 if (currentDot.equals("2")) {
                     dotButtons.put("2 " + emodji, "dot_2");
                     dotButtons.put("3", "dot_3");
@@ -133,10 +139,15 @@ public class Main extends TelegramLongPollingBot {
                     dotButtons.put("3", "dot_3");
                     dotButtons.put("4 " + emodji, "dot_4");
                 }
-
                 attachButtons(message, dotButtons,3);
-
                 sendApiMethodAsync(message);
+            }
+            if (update.getCallbackQuery().getData().equals("dot_2")) {
+                settings.updateDot(chatId, 2);
+            } else if (update.getCallbackQuery().getData().equals("dot_3")) {
+                settings.updateDot(chatId, 3);
+            } else if (update.getCallbackQuery().getData().equals("dot_4")) {
+                settings.updateDot(chatId, 4);
             }
 
 
@@ -146,11 +157,9 @@ public class Main extends TelegramLongPollingBot {
 
                 String currentBank = userSettings.getBank();
                 //TODO позначати смайлом який банк щас у юзера -  зробила!!
+
                 Map<String, String> bankButtons = new LinkedHashMap<>();
 
-                //    NBU_BANK = "nbu_bank";
-                //    MONO_BANK = "mono_bank";
-                //    PRIVAT_BANK = "privat_bank";
                 if (currentBank.equals("nbu_bank")) {
                     bankButtons.put("НБУ " + emodji, "bank_nbu");
                     bankButtons.put("Приватбанк ", "bank_privat");
@@ -165,7 +174,19 @@ public class Main extends TelegramLongPollingBot {
                     bankButtons.put("Монобанк " + emodji, "bank_mono");
                 }
 
-                attachButtons(message, bankButtons,3);
+                attachButtons(message, bankButtons,2);
+
+
+//                if (update.getCallbackQuery().getData().equals("bank_nbu")) {
+//                    settings.updateBank(chatId, "bank_nbu");
+//                }
+//                if (update.getCallbackQuery().getData().equals("privat_bank")) {
+//                    settings.updateBank(chatId, "privat_bank");
+//                }
+//                if (update.getCallbackQuery().getData().equals("bank_mono")) {
+//                    settings.updateBank(chatId, "bank_mono");
+//                }
+
 
                 sendApiMethodAsync(message);
             }
@@ -189,11 +210,11 @@ public class Main extends TelegramLongPollingBot {
                 attachButtons(message, currencyButtons,2);
 
                 sendApiMethodAsync(message);
+
             }
             if (update.getCallbackQuery().getData().equals("EURO")) {
                 long messageId = update.getCallbackQuery().getMessage().getMessageId();
                 String inline_message_id = update.getCallbackQuery().getInlineMessageId();
-                long message_id = update.getCallbackQuery().getMessage().getMessageId();
                 long chat_id = update.getCallbackQuery().getMessage().getChatId();
                 settings.updateCurrency(chatId, "usd", false);
                 settings.updateCurrency(chatId, "euro", true);
@@ -226,7 +247,6 @@ public class Main extends TelegramLongPollingBot {
             if (update.getCallbackQuery().getData().equals("USD")) {
                 long messageId = update.getCallbackQuery().getMessage().getMessageId();
                 String inline_message_id = update.getCallbackQuery().getInlineMessageId();
-                long message_id = update.getCallbackQuery().getMessage().getMessageId();
                 long chat_id = update.getCallbackQuery().getMessage().getChatId();
                 settings.updateCurrency(chatId, "usd", true);
                 settings.updateCurrency(chatId, "euro", false);
@@ -278,9 +298,9 @@ public class Main extends TelegramLongPollingBot {
                 timeButtons.put("18 " + (currentTime.equals("18") ? emodji : ""), "Time18");
 
                 if (userSettings.isNotificationEnabled()) {
-                    timeButtons.put("Вимкнути повідомлення " + emodji, "DisableNotification");
+                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
                 } else {
-                    timeButtons.put("Увімкнути повідомлення " + emodji, "EnableNotification");
+                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
                 }
                 attachButtons(message, timeButtons,5);
 
