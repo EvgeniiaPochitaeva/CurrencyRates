@@ -10,14 +10,18 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
+import javax.security.auth.callback.Callback;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -41,7 +45,7 @@ public class Main extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "6834411073:AAEIUv86SUhblfrDBWoZTKUaKDgcOis_npM";
+        return "6819128935:AAFD36ZFRbl8b1ZW5RzbmVmle6imI6bgFl0";
     }
 
 
@@ -53,8 +57,7 @@ public class Main extends TelegramLongPollingBot {
         String emodji = "✅";
         Settings settings = new Settings();
         CurrencyClient currencyClient = new CurrencyClient();
-        UserSettings userSettings;
-        userSettings = settings.getOrCreateUserSettings(chatId);
+        UserSettings userSettings = settings.getOrCreateUserSettings(chatId);
 
 
         if (update.hasMessage() && update.getMessage().getText().equals("/start")) {
@@ -74,6 +77,8 @@ public class Main extends TelegramLongPollingBot {
 
 
         if (update.hasCallbackQuery()) {
+            System.out.println(update.getCallbackQuery().getData());
+
             if (update.getCallbackQuery().getData().equals("Get info")) {
                 settings.getOrCreateUserSettings(chatId);
                 String bank = userSettings.getBank();
@@ -96,6 +101,7 @@ public class Main extends TelegramLongPollingBot {
 
 
                 sendApiMethodAsync(message);
+
             }
 
 
@@ -213,66 +219,124 @@ public class Main extends TelegramLongPollingBot {
 
             }
             if (update.getCallbackQuery().getData().equals("EURO")) {
-                long messageId = update.getCallbackQuery().getMessage().getMessageId();
-                String inline_message_id = update.getCallbackQuery().getInlineMessageId();
-                long chat_id = update.getCallbackQuery().getMessage().getChatId();
-                settings.updateCurrency(chatId, "usd", false);
-                settings.updateCurrency(chatId, "euro", true);
-                EditMessageReplyMarkup new_message = new EditMessageReplyMarkup();
-                new_message.setChatId(chat_id);
-                new_message.setMessageId((int) messageId);
-                new_message.setInlineMessageId(inline_message_id);
+                SendMessage message = createMessage("Оберіть валюту:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
                 boolean currentEuroEnabled = userSettings.isEuroEnabled();
                 boolean currentUsdEnabled = userSettings.isUsdEnabled();
-
-                String euroText = "EURO " + (currentEuroEnabled ? emodji : "");
+                settings.updateCurrency(chatId, "euro", !currentEuroEnabled);
+                Map<String, String> currencyButtons = new LinkedHashMap<>();
+                String euroText = "EURO " + (!currentEuroEnabled ? emodji : "");
                 String usdText = "USD " + (currentUsdEnabled ? emodji : "");
-
-                InlineKeyboardButton usdBtn = new InlineKeyboardButton();
-                usdBtn.setText(new String(usdText.getBytes(), StandardCharsets.UTF_8));
-                usdBtn.setCallbackData("USD");
-                InlineKeyboardButton euroBtn = new InlineKeyboardButton();
-                euroBtn.setText(new String(euroText.getBytes(), StandardCharsets.UTF_8));
-                euroBtn.setCallbackData("EURO");
-                InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-                List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-                List<InlineKeyboardButton> rowInline = new ArrayList<>();
-                rowInline.add(euroBtn);
-                rowInline.add(usdBtn);
-                rowsInline.add(rowInline);
-                markupInline.setKeyboard(rowsInline);
-                new_message.setReplyMarkup(markupInline);
-                sendApiMethodAsync(new_message);
+                currencyButtons.put(euroText, "EURO");
+                currencyButtons.put(usdText, "USD");
+                attachButtons(message, currencyButtons,2);
+                sendApiMethodAsync(message);
+//                System.out.println("EURO TEST DONE 1");
+//                long messageId = update.getCallbackQuery().getMessage().getMessageId();
+//                String inline_message_id = update.getCallbackQuery().getInlineMessageId();
+//                long chat_id = update.getCallbackQuery().getMessage().getChatId();
+//
+//                settings.updateCurrency(chatId, "usd", false);
+//                settings.updateCurrency(chatId, "euro", true);
+//                System.out.println("EURO TEST DONE 2 - SAVED");
+//                EditMessageReplyMarkup new_message = new EditMessageReplyMarkup();
+//                new_message.setChatId(chat_id);
+//                new_message.setMessageId((int) messageId);
+//                new_message.setInlineMessageId(inline_message_id);
+//
+//                System.out.println("EURO TEST DONE #");
+//                boolean currentEuroEnabled = userSettings.isEuroEnabled();
+//                boolean currentUsdEnabled = userSettings.isUsdEnabled();
+//
+//                String euroText = "EURO " + (currentEuroEnabled ? emodji : "");
+//                String usdText = "USD " + (currentUsdEnabled ? emodji : "");
+//
+//                InlineKeyboardButton usdBtn = new InlineKeyboardButton();
+//                usdBtn.setText(new String(usdText.getBytes(), StandardCharsets.UTF_8));
+//                usdBtn.setCallbackData("USD");
+//
+//                InlineKeyboardButton euroBtn = new InlineKeyboardButton();
+//                euroBtn.setText(new String(euroText.getBytes(), StandardCharsets.UTF_8));
+//                euroBtn.setCallbackData("EURO");
+//                System.out.println("EURO TEST DONE 4");
+//                InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+//                List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+//                List<InlineKeyboardButton> rowInline = new ArrayList<>();
+//                rowInline.add(euroBtn);
+//                rowInline.add(usdBtn);
+//                rowsInline.add(rowInline);
+//                markupInline.setKeyboard(rowsInline);
+//                new_message.setReplyMarkup(markupInline);
+//                System.out.println("EURO TEST DONE 5");
+//
+//                try {
+//                    this.sendApiMethod(new_message);
+//                    //this.sendApiMethod(message);
+//                } catch (TelegramApiException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                return;
             }
             if (update.getCallbackQuery().getData().equals("USD")) {
-                long messageId = update.getCallbackQuery().getMessage().getMessageId();
-                String inline_message_id = update.getCallbackQuery().getInlineMessageId();
-                long chat_id = update.getCallbackQuery().getMessage().getChatId();
-                settings.updateCurrency(chatId, "usd", true);
-                settings.updateCurrency(chatId, "euro", false);
-                EditMessageReplyMarkup new_message = new EditMessageReplyMarkup();
-                new_message.setChatId(chat_id);
-                new_message.setMessageId((int) messageId);
-                new_message.setInlineMessageId(inline_message_id);
+                SendMessage message = createMessage("Оберіть валюту:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
                 boolean currentEuroEnabled = userSettings.isEuroEnabled();
                 boolean currentUsdEnabled = userSettings.isUsdEnabled();
+                settings.updateCurrency(chatId, "usd", !currentUsdEnabled);
+                Map<String, String> currencyButtons = new LinkedHashMap<>();
                 String euroText = "EURO " + (currentEuroEnabled ? emodji : "");
-                String usdText = "USD " + (currentUsdEnabled ? emodji : "");
-                InlineKeyboardButton usdBtn = new InlineKeyboardButton();
-                usdBtn.setText(new String(usdText.getBytes(), StandardCharsets.UTF_8));
-                usdBtn.setCallbackData("USD");
-                InlineKeyboardButton euroBtn = new InlineKeyboardButton();
-                euroBtn.setText(new String(euroText.getBytes(), StandardCharsets.UTF_8));
-                euroBtn.setCallbackData("EURO");
-                InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-                List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-                List<InlineKeyboardButton> rowInline = new ArrayList<>();
-                rowInline.add(euroBtn);
-                rowInline.add(usdBtn);
-                rowsInline.add(rowInline);
-                markupInline.setKeyboard(rowsInline);
-                new_message.setReplyMarkup(markupInline);
-                sendApiMethodAsync(new_message);
+                String usdText = "USD " + (!currentUsdEnabled ? emodji : "");
+                currencyButtons.put(euroText, "EURO");
+                currencyButtons.put(usdText, "USD");
+                attachButtons(message, currencyButtons,2);
+                sendApiMethodAsync(message);
+
+
+//                int messageId = update.getCallbackQuery().getMessage().getMessageId();
+//                String inline_message_id = update.getCallbackQuery().getInlineMessageId();
+//                long chat_id = update.getCallbackQuery().getMessage().getChatId();
+//                settings.updateCurrency(chatId, "usd", true);
+//                settings.updateCurrency(chatId, "euro", false);
+//                EditMessageReplyMarkup new_message = new EditMessageReplyMarkup();
+//
+//                new_message.setChatId(chat_id);
+//
+//                new_message.setMessageId(messageId);
+//                new_message.setInlineMessageId(inline_message_id);
+//
+//                boolean currentEuroEnabled = userSettings.isEuroEnabled();
+//                boolean currentUsdEnabled = userSettings.isUsdEnabled();
+//
+//                String euroText = "EURO " + (currentEuroEnabled ? emodji : "");
+//                String usdText = "USD " + (currentUsdEnabled ? emodji : "");
+//                InlineKeyboardButton usdBtn = new InlineKeyboardButton();
+//                usdBtn.setText(new String(usdText.getBytes(), StandardCharsets.UTF_8));
+//                usdBtn.setCallbackData("USD");
+//                InlineKeyboardButton euroBtn = new InlineKeyboardButton();
+//                euroBtn.setText(new String(euroText.getBytes(), StandardCharsets.UTF_8));
+//                euroBtn.setCallbackData("EURO");
+//                InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+//                List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+//                List<InlineKeyboardButton> rowInline = new ArrayList<>();
+//                rowInline.add(euroBtn);
+//                rowInline.add(usdBtn);
+//                rowsInline.add(rowInline);
+//                markupInline.setKeyboard(rowsInline);
+//                new_message.setReplyMarkup(markupInline);
+//
+//                //sendApiMethodAsync(new_message);
+////                try {
+////                    //this.sendApiMethod(new_message);
+////                } catch (TelegramApiException e) {
+////                    throw new RuntimeException(e);
+////                }
+//                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), messageId);
+//                sendApiMethodAsync(deleteMessage);
             }
 
 
@@ -303,6 +367,9 @@ public class Main extends TelegramLongPollingBot {
                     timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
                 }
                 attachButtons(message, timeButtons,5);
+
+
+
 
                 sendApiMethodAsync(message);
             }
