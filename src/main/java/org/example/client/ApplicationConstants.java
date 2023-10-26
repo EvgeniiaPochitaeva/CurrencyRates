@@ -15,8 +15,8 @@ public class ApplicationConstants {
 
 
     // user settings
-//    public static final String NBU_BANK = "nbu_bank";
-//    public static final String MONO_BANK = "mono_bank";
-//    public static final String PRIVAT_BANK = "privat_bank";
+    public static final String NBU_BANK = "nbu_bank";
+    public static final String MONO_BANK = "mono_bank";
+    public static final String PRIVAT_BANK = "privat_bank";
 
 }

@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2104bcad-bcbc-47f0-bc7a-0790ea93ef0b" name="Changes" comment="hotFix Settings and create userdata.json">
+    <list default="true" id="2104bcad-bcbc-47f0-bc7a-0790ea93ef0b" name="Changes" comment="fix">
       <change afterPath="$PROJECT_DIR$/userdata1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/ApplicationConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/ApplicationConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/CurrencyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/CurrencyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/userdata.json" beforeDir="false" afterPath="$PROJECT_DIR$/userdata.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,18 +80,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/eshap/IdeaProjects/CurrencyRates",
-    "onboarding.tips.debug.path": "C:/Users/eshap/IdeaProjects/CurrencyRates/src/main/java/org/example/Main.java",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/eshap/IdeaProjects/CurrencyRates&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/eshap/IdeaProjects/CurrencyRates/src/main/java/org/example/Main.java&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\eshap\IdeaProjects\CurrencyRates\images" />
@@ -192,7 +197,23 @@
       <option name="project" value="LOCAL" />
       <updated>1698178436523</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add SchedulerCurrency.Start(); in Main">
+      <option name="closed" value="true" />
+      <created>1698178638376</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1698178638376</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fix">
+      <option name="closed" value="true" />
+      <created>1698181042810</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1698181042810</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -249,7 +270,9 @@
     <MESSAGE value="update SendMessageByTime.java" />
     <MESSAGE value="hotFix" />
     <MESSAGE value="hotFix Settings and create userdata.json" />
-    <option name="LAST_COMMIT_MESSAGE" value="hotFix Settings and create userdata.json" />
+    <MESSAGE value="add SchedulerCurrency.Start(); in Main" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
   <component name="com.github.evgenys91.machinet.common.dslhistory.DslHistoryState">
     <option name="historyDtoById">
@@ -268,6 +291,29 @@
               <option name="usedLocalFilePaths">
                 <list>
                   <option value="$PROJECT_DIR$/build.gradle.kts" />
+                </list>
+              </option>
+            </ChatHistoryModel>
+          </value>
+        </entry>
+        <entry key="4933a3">
+          <value>
+            <ChatHistoryModel>
+              <option name="id" value="4933a3" />
+              <option name="initiateTms" value="1698213274331" />
+              <option name="request" value="   @Override&#10;    public String getBotToken() { is deprecated how to fix" />
+              <option name="response" value="" />
+              <option name="responseDescription" value="To fix the deprecation warning for the `getBotToken()` method, you can remove the `@Override` annotation from the method declaration. The `@Override` annotation is used to indicate that a method is intended to override a method from a superclass or interface. However, if the method you are trying to override is not present in the superclass or interface, the `@Override` annotation will cause a compilation error.&#10;&#10;Here's the updated code:&#10;&#10;```java&#10;public class Main {&#10;&#10;    public String getBotToken() {&#10;        // implementation goes here&#10;    }&#10;&#10;    public static void main(String[] args) {&#10;        // main method implementation goes here&#10;    }&#10;}&#10;```&#10;&#10;By removing the `@Override` annotation, the deprecation warning for the `getBotToken()` method should be resolved." />
+              <option name="responseFileName" value="" />
+              <option name="responseFilePath" value="" />
+              <option name="responseTms" value="1698213280497" />
+              <option name="usedLocalFilePaths">
+                <list>
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/UserSettings.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/Main.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/SchedulerCurrency.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/Settings.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/SendMessageByTime.java" />
                 </list>
               </option>
             </ChatHistoryModel>

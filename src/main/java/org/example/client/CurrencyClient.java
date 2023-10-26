@@ -8,7 +8,6 @@ import org.example.bank.currency.NBUCurrency;
 import org.example.bank.currency.PBCurrency;
 import org.example.settings.UserSettings;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -23,7 +22,7 @@ public class CurrencyClient {
     private final Gson gson = new Gson();
 
     @SneakyThrows
-    public List<MonoCurrency> getMonoCurrencyRates(URI uri) throws IOException, InterruptedException {
+    public List<MonoCurrency> getMonoCurrencyRates(URI uri) {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
@@ -35,7 +34,7 @@ public class CurrencyClient {
     }
 
     @SneakyThrows
-    public List<PBCurrency> getPBCurrencyRates(URI uri) throws IOException, InterruptedException {
+    public List<PBCurrency> getPBCurrencyRates(URI uri){
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
@@ -47,7 +46,7 @@ public class CurrencyClient {
     }
 
     @SneakyThrows
-    public List<NBUCurrency> getNBUCurrencyRates(URI uri) throws IOException, InterruptedException {
+    public List<NBUCurrency> getNBUCurrencyRates(URI uri) {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
@@ -74,7 +73,7 @@ public class CurrencyClient {
     }
 
     @SneakyThrows
-    public String getUserMonoCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
+    public String getUserMonoCurrencyRates(UserSettings userSettings)  {
         int dotCount = Integer.parseInt(userSettings.getDotCount());
 
         if (userSettings.isEuroEnabled() && !userSettings.isEuroEnabled()) {
@@ -110,7 +109,7 @@ public class CurrencyClient {
     }
 
     @SneakyThrows
-    public String getUserPBCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
+    public String getUserPBCurrencyRates(UserSettings userSettings){
         int dotCount = Integer.parseInt(userSettings.getDotCount());
         if (userSettings.isEuroEnabled() && !userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
@@ -120,7 +119,7 @@ public class CurrencyClient {
                     .map(Object::toString)
                     .collect(Collectors.joining("\n"));
         }
-        if (!userSettings.isUsdEnabled() && userSettings.isUsdEnabled()) {
+        if (!userSettings.isEuroEnabled() && userSettings.isUsdEnabled()) {
             List<PBCurrency> currencyRates = new CurrencyClient().getPBCurrencyRates(URI.create(PB_URI));
             List<PBCurrency> roundedCurrencyRates = CurrencyClient.roundPBCurrency(currencyRates, dotCount);
             return roundedCurrencyRates.stream()
@@ -138,7 +137,7 @@ public class CurrencyClient {
     }
 
     @SneakyThrows
-    public String getUserNBUCurrencyRates(UserSettings userSettings) throws IOException, InterruptedException {
+    public String getUserNBUCurrencyRates(UserSettings userSettings) {
         int dotCount = Integer.parseInt(userSettings.getDotCount());
         if (userSettings.isEuroEnabled() && !userSettings.isUsdEnabled()) {
             List<NBUCurrency> currencyRates = new CurrencyClient().getNBUCurrencyRates(URI.create(NBU_URI));

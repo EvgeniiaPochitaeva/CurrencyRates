@@ -1,6 +1,7 @@
 package org.example;
 
 
+import org.example.client.CurrencyClient;
 import org.example.settings.SchedulerCurrency;
 import org.example.settings.Settings;
 import org.example.settings.UserSettings;
@@ -9,6 +10,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendAnimation;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -20,6 +22,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+
+import static org.example.client.ApplicationConstants.MONO_BANK;
+import static org.example.client.ApplicationConstants.PRIVAT_BANK;
 
 
 public class Main extends TelegramLongPollingBot {
@@ -46,6 +51,7 @@ public class Main extends TelegramLongPollingBot {
         System.out.println("chatId = " + chatId);
         String emodji = "✅";
         Settings settings = new Settings();
+        CurrencyClient currencyClient = new CurrencyClient();
         UserSettings userSettings;
 
             userSettings = settings.getOrCreateUserSettings(chatId);
@@ -69,10 +75,20 @@ public class Main extends TelegramLongPollingBot {
 
         if (update.hasCallbackQuery()) {
             if (update.getCallbackQuery().getData().equals("Get info")) {
-                SendMessage message = createMessage("Дані банка"); // данні банка
+                settings.getOrCreateUserSettings(chatId);
+                String bank = userSettings.getBank();
+                String result = null;
+                if (bank.equals(PRIVAT_BANK)) {
+                   result = currencyClient.getUserPBCurrencyRates(userSettings);
+                } else if (bank.equals(MONO_BANK)) {
+                    result = currencyClient.getUserMonoCurrencyRates(userSettings);
+                } else {
+                    currencyClient.getUserNBUCurrencyRates(userSettings);
+                }
+
+                SendMessage message = createMessage(result); // данні банка
                 message.setChatId(chatId);
 
-                    settings.getOrCreateUserSettings(chatId);
 
                 sendApiMethodAsync(message);
             }
@@ -174,6 +190,72 @@ public class Main extends TelegramLongPollingBot {
 
                 sendApiMethodAsync(message);
             }
+            if (update.getCallbackQuery().getData().equals("EURO")) {
+                long messageId = update.getCallbackQuery().getMessage().getMessageId();
+                String inline_message_id = update.getCallbackQuery().getInlineMessageId();
+                long message_id = update.getCallbackQuery().getMessage().getMessageId();
+                long chat_id = update.getCallbackQuery().getMessage().getChatId();
+                settings.updateCurrency(chatId, "usd", false);
+                settings.updateCurrency(chatId, "euro", true);
+                EditMessageReplyMarkup new_message = new EditMessageReplyMarkup();
+                new_message.setChatId(chat_id);
+                new_message.setMessageId((int) messageId);
+                new_message.setInlineMessageId(inline_message_id);
+                boolean currentEuroEnabled = userSettings.isEuroEnabled();
+                boolean currentUsdEnabled = userSettings.isUsdEnabled();
+
+                String euroText = "EURO " + (currentEuroEnabled ? emodji : "");
+                String usdText = "USD " + (currentUsdEnabled ? emodji : "");
+
+                InlineKeyboardButton usdBtn = new InlineKeyboardButton();
+                usdBtn.setText(new String(usdText.getBytes(), StandardCharsets.UTF_8));
+                usdBtn.setCallbackData("USD");
+                InlineKeyboardButton euroBtn = new InlineKeyboardButton();
+                euroBtn.setText(new String(euroText.getBytes(), StandardCharsets.UTF_8));
+                euroBtn.setCallbackData("EURO");
+                InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+                List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+                List<InlineKeyboardButton> rowInline = new ArrayList<>();
+                rowInline.add(euroBtn);
+                rowInline.add(usdBtn);
+                rowsInline.add(rowInline);
+                markupInline.setKeyboard(rowsInline);
+                new_message.setReplyMarkup(markupInline);
+                sendApiMethodAsync(new_message);
+            }
+            if (update.getCallbackQuery().getData().equals("USD")) {
+                long messageId = update.getCallbackQuery().getMessage().getMessageId();
+                String inline_message_id = update.getCallbackQuery().getInlineMessageId();
+                long message_id = update.getCallbackQuery().getMessage().getMessageId();
+                long chat_id = update.getCallbackQuery().getMessage().getChatId();
+                settings.updateCurrency(chatId, "usd", true);
+                settings.updateCurrency(chatId, "euro", false);
+                EditMessageReplyMarkup new_message = new EditMessageReplyMarkup();
+                new_message.setChatId(chat_id);
+                new_message.setMessageId((int) messageId);
+                new_message.setInlineMessageId(inline_message_id);
+                boolean currentEuroEnabled = userSettings.isEuroEnabled();
+                boolean currentUsdEnabled = userSettings.isUsdEnabled();
+                String euroText = "EURO " + (currentEuroEnabled ? emodji : "");
+                String usdText = "USD " + (currentUsdEnabled ? emodji : "");
+                InlineKeyboardButton usdBtn = new InlineKeyboardButton();
+                usdBtn.setText(new String(usdText.getBytes(), StandardCharsets.UTF_8));
+                usdBtn.setCallbackData("USD");
+                InlineKeyboardButton euroBtn = new InlineKeyboardButton();
+                euroBtn.setText(new String(euroText.getBytes(), StandardCharsets.UTF_8));
+                euroBtn.setCallbackData("EURO");
+                InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+                List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+                List<InlineKeyboardButton> rowInline = new ArrayList<>();
+                rowInline.add(euroBtn);
+                rowInline.add(usdBtn);
+                rowsInline.add(rowInline);
+                markupInline.setKeyboard(rowsInline);
+                new_message.setReplyMarkup(markupInline);
+                sendApiMethodAsync(new_message);
+            }
+
+
 
             if (update.getCallbackQuery().getData().equals("Time")) {
                 SendMessage message = createMessage("Оберіть час оповіщення:");
