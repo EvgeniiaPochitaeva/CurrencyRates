@@ -41,4 +41,11 @@ public class PBCurrency {
     public void setSale(String sale) {
         this.sale = sale;
     }
+    @Override
+    public String toString() {
+        return "Курс Приватбанк: " + ccy + "/" + base_ccy + "\n" +
+                "Покупка: " + buy + "\n" +
+                "Продаж:  " + sale + "\n";
+    }
+
 }
