@@ -150,11 +150,58 @@ public class Main extends TelegramLongPollingBot {
                 sendApiMethodAsync(message);
             }
             if (update.getCallbackQuery().getData().equals("dot_2")) {
+                SendMessage message = createMessage("Оберіть кількість знаків після коми:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+
                 settings.updateDot(chatId, 2);
-            } else if (update.getCallbackQuery().getData().equals("dot_3")) {
-                settings.updateDot(chatId, 3);
-            } else if (update.getCallbackQuery().getData().equals("dot_4")) {
+                Map<String, String> dotButtons = new LinkedHashMap<>();
+
+                dotButtons.put("2 " +  emodji , "dot_2");
+                dotButtons.put("3 " , "dot_3");
+                dotButtons.put("2 "  , "dot_4");
+
+                attachButtons(message, dotButtons,3);
+                sendApiMethodAsync(message);
+
+            }
+            if (update.getCallbackQuery().getData().equals("dot_3")) {
+                SendMessage message = createMessage("Оберіть кількість знаків після коми:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+
+                settings.updateDot(chatId, 2);
+                Map<String, String> dotButtons = new LinkedHashMap<>();
+
+                dotButtons.put("2 " , "dot_2");
+                dotButtons.put("3 " +  emodji , "dot_3");
+                dotButtons.put("4 "  , "dot_4");
+
+                attachButtons(message, dotButtons,3);
+                sendApiMethodAsync(message);
+
+            }
+            if (update.getCallbackQuery().getData().equals("dot_4")) {
+                SendMessage message = createMessage("Оберіть кількість знаків після коми:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+
                 settings.updateDot(chatId, 4);
+                Map<String, String> dotButtons = new LinkedHashMap<>();
+
+                dotButtons.put("2 " , "dot_2");
+                dotButtons.put("3 " , "dot_3");
+                dotButtons.put("4 "  +  emodji , "dot_4");
+
+                attachButtons(message, dotButtons,3);
+                sendApiMethodAsync(message);
+
             }
 
 
@@ -168,35 +215,77 @@ public class Main extends TelegramLongPollingBot {
                 Map<String, String> bankButtons = new LinkedHashMap<>();
 
                 if (currentBank.equals("nbu_bank")) {
-                    bankButtons.put("НБУ " + emodji, "bank_nbu");
-                    bankButtons.put("Приватбанк ", "bank_privat");
-                    bankButtons.put("Монобанк", "bank_mono");
+                    bankButtons.put("НБУ " + emodji, "nbu_bank");
+                    bankButtons.put("Приватбанк ", "privat_bank");
+                    bankButtons.put("Монобанк", "mono_bank");
                 } else if (currentBank.equals("privat_bank")) {
-                    bankButtons.put("НБУ ", "bank_nbu");
-                    bankButtons.put("Приватбанк " + emodji, "bank_privat");
-                    bankButtons.put("Монобанк ", "bank_mono");
+                    bankButtons.put("НБУ ", "nbu_bank");
+                    bankButtons.put("Приватбанк " + emodji, "privat_bank");
+                    bankButtons.put("Монобанк ", "mono_bank");
                 } else if (currentBank.equals("mono_bank")) {
-                    bankButtons.put("НБУ ", "bank_nbu");
-                    bankButtons.put("Приватбанк ", "bank_privat");
-                    bankButtons.put("Монобанк " + emodji, "bank_mono");
+                    bankButtons.put("НБУ ", "nbu_bank");
+                    bankButtons.put("Приватбанк ", "privat_bank");
+                    bankButtons.put("Монобанк " + emodji, "mono_bank");
                 }
 
                 attachButtons(message, bankButtons,2);
-
-
-//                if (update.getCallbackQuery().getData().equals("bank_nbu")) {
-//                    settings.updateBank(chatId, "bank_nbu");
-//                }
-//                if (update.getCallbackQuery().getData().equals("privat_bank")) {
-//                    settings.updateBank(chatId, "privat_bank");
-//                }
-//                if (update.getCallbackQuery().getData().equals("bank_mono")) {
-//                    settings.updateBank(chatId, "bank_mono");
-//                }
-
-
                 sendApiMethodAsync(message);
             }
+            if (update.getCallbackQuery().getData().equals("nbu_bank")) {
+                SendMessage message = createMessage("Оберіть банк:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+
+                settings.updateBank(chatId, "nbu_bank");
+                Map<String, String> bankButtons = new LinkedHashMap<>();
+
+                bankButtons.put("НБУ " +  emodji , "nbu_bank");
+                bankButtons.put("Приватбанк " , "privat_bank");
+                bankButtons.put("Монобанк "  , "mono_bank");
+
+                attachButtons(message, bankButtons,2);
+                sendApiMethodAsync(message);
+
+            }
+            if (update.getCallbackQuery().getData().equals("privat_bank")) {
+                SendMessage message = createMessage("Оберіть банк:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+
+                settings.updateBank(chatId, "privat_bank");
+                Map<String, String> bankButtons = new LinkedHashMap<>();
+
+                bankButtons.put("НБУ " , "nbu_bank");
+                bankButtons.put("Приватбанк " +  emodji , "privat_bank");
+                bankButtons.put("Монобанк "  , "mono_bank");
+
+                attachButtons(message, bankButtons,2);
+                sendApiMethodAsync(message);
+
+            }
+            if (update.getCallbackQuery().getData().equals("mono_bank")) {
+                SendMessage message = createMessage("Оберіть банк:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+
+                settings.updateBank(chatId, "mono_bank");
+                Map<String, String> bankButtons = new LinkedHashMap<>();
+
+                bankButtons.put("НБУ " , "nbu_bank");
+                bankButtons.put("Приватбанк " , "privat_bank");
+                bankButtons.put("Монобанк "  +  emodji , "mono_bank");
+
+                attachButtons(message, bankButtons,2);
+                sendApiMethodAsync(message);
+
+            }
+
 
 
             if (update.getCallbackQuery().getData().equals("Currency")) {
@@ -235,51 +324,7 @@ public class Main extends TelegramLongPollingBot {
                 currencyButtons.put(usdText, "USD");
                 attachButtons(message, currencyButtons,2);
                 sendApiMethodAsync(message);
-//                System.out.println("EURO TEST DONE 1");
-//                long messageId = update.getCallbackQuery().getMessage().getMessageId();
-//                String inline_message_id = update.getCallbackQuery().getInlineMessageId();
-//                long chat_id = update.getCallbackQuery().getMessage().getChatId();
-//
-//                settings.updateCurrency(chatId, "usd", false);
-//                settings.updateCurrency(chatId, "euro", true);
-//                System.out.println("EURO TEST DONE 2 - SAVED");
-//                EditMessageReplyMarkup new_message = new EditMessageReplyMarkup();
-//                new_message.setChatId(chat_id);
-//                new_message.setMessageId((int) messageId);
-//                new_message.setInlineMessageId(inline_message_id);
-//
-//                System.out.println("EURO TEST DONE #");
-//                boolean currentEuroEnabled = userSettings.isEuroEnabled();
-//                boolean currentUsdEnabled = userSettings.isUsdEnabled();
-//
-//                String euroText = "EURO " + (currentEuroEnabled ? emodji : "");
-//                String usdText = "USD " + (currentUsdEnabled ? emodji : "");
-//
-//                InlineKeyboardButton usdBtn = new InlineKeyboardButton();
-//                usdBtn.setText(new String(usdText.getBytes(), StandardCharsets.UTF_8));
-//                usdBtn.setCallbackData("USD");
-//
-//                InlineKeyboardButton euroBtn = new InlineKeyboardButton();
-//                euroBtn.setText(new String(euroText.getBytes(), StandardCharsets.UTF_8));
-//                euroBtn.setCallbackData("EURO");
-//                System.out.println("EURO TEST DONE 4");
-//                InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-//                List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-//                List<InlineKeyboardButton> rowInline = new ArrayList<>();
-//                rowInline.add(euroBtn);
-//                rowInline.add(usdBtn);
-//                rowsInline.add(rowInline);
-//                markupInline.setKeyboard(rowsInline);
-//                new_message.setReplyMarkup(markupInline);
-//                System.out.println("EURO TEST DONE 5");
-//
-//                try {
-//                    this.sendApiMethod(new_message);
-//                    //this.sendApiMethod(message);
-//                } catch (TelegramApiException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                return;
+
             }
             if (update.getCallbackQuery().getData().equals("USD")) {
                 SendMessage message = createMessage("Оберіть валюту:");
@@ -297,50 +342,7 @@ public class Main extends TelegramLongPollingBot {
                 attachButtons(message, currencyButtons,2);
                 sendApiMethodAsync(message);
 
-
-//                int messageId = update.getCallbackQuery().getMessage().getMessageId();
-//                String inline_message_id = update.getCallbackQuery().getInlineMessageId();
-//                long chat_id = update.getCallbackQuery().getMessage().getChatId();
-//                settings.updateCurrency(chatId, "usd", true);
-//                settings.updateCurrency(chatId, "euro", false);
-//                EditMessageReplyMarkup new_message = new EditMessageReplyMarkup();
-//
-//                new_message.setChatId(chat_id);
-//
-//                new_message.setMessageId(messageId);
-//                new_message.setInlineMessageId(inline_message_id);
-//
-//                boolean currentEuroEnabled = userSettings.isEuroEnabled();
-//                boolean currentUsdEnabled = userSettings.isUsdEnabled();
-//
-//                String euroText = "EURO " + (currentEuroEnabled ? emodji : "");
-//                String usdText = "USD " + (currentUsdEnabled ? emodji : "");
-//                InlineKeyboardButton usdBtn = new InlineKeyboardButton();
-//                usdBtn.setText(new String(usdText.getBytes(), StandardCharsets.UTF_8));
-//                usdBtn.setCallbackData("USD");
-//                InlineKeyboardButton euroBtn = new InlineKeyboardButton();
-//                euroBtn.setText(new String(euroText.getBytes(), StandardCharsets.UTF_8));
-//                euroBtn.setCallbackData("EURO");
-//                InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-//                List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-//                List<InlineKeyboardButton> rowInline = new ArrayList<>();
-//                rowInline.add(euroBtn);
-//                rowInline.add(usdBtn);
-//                rowsInline.add(rowInline);
-//                markupInline.setKeyboard(rowsInline);
-//                new_message.setReplyMarkup(markupInline);
-//
-//                //sendApiMethodAsync(new_message);
-////                try {
-////                    //this.sendApiMethod(new_message);
-////                } catch (TelegramApiException e) {
-////                    throw new RuntimeException(e);
-////                }
-//                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), messageId);
-//                sendApiMethodAsync(deleteMessage);
             }
-
-
 
             if (update.getCallbackQuery().getData().equals("Time")) {
                 SendMessage message = createMessage("Оберіть час оповіщення:");
@@ -369,11 +371,339 @@ public class Main extends TelegramLongPollingBot {
                 }
                 attachButtons(message, timeButtons,5);
 
-
-
-
                 sendApiMethodAsync(message);
             }
+            if (update.getCallbackQuery().getData().equals("Time9")) {
+                SendMessage message = createMessage("Оберіть час оповіщення:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+                settings.updateTime(chatId, "Time9");
+                Map<String, String> timeButtons = new LinkedHashMap<>();
+
+                timeButtons.put("9 " +  emodji, "Time9");
+                timeButtons.put("10 ", "Time10");
+                timeButtons.put("11 ", "Time11");
+                timeButtons.put("12 ", "Time12");
+                timeButtons.put("13 ", "Time13");
+                timeButtons.put("14 ", "Time14");
+                timeButtons.put("15 ", "Time15");
+                timeButtons.put("16 ", "Time16");
+                timeButtons.put("17 ", "Time17");
+                timeButtons.put("18 ", "Time18");
+                if (userSettings.isNotificationEnabled()) {
+                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
+                } else {
+                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
+                }
+
+                attachButtons(message, timeButtons,5);
+                sendApiMethodAsync(message);
+            }
+            if (update.getCallbackQuery().getData().equals("Time10")) {
+                SendMessage message = createMessage("Оберіть час оповіщення:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+                settings.updateTime(chatId, "Time10");
+                Map<String, String> timeButtons = new LinkedHashMap<>();
+
+                timeButtons.put("9 ", "Time9");
+                timeButtons.put("10 "+  emodji, "Time10");
+                timeButtons.put("11 ", "Time11");
+                timeButtons.put("12 ", "Time12");
+                timeButtons.put("13 ", "Time13");
+                timeButtons.put("14 ", "Time14");
+                timeButtons.put("15 ", "Time15");
+                timeButtons.put("16 ", "Time16");
+                timeButtons.put("17 ", "Time17");
+                timeButtons.put("18 ", "Time18");
+                if (userSettings.isNotificationEnabled()) {
+                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
+                } else {
+                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
+                }
+
+                attachButtons(message, timeButtons,5);
+                sendApiMethodAsync(message);
+            }
+            if (update.getCallbackQuery().getData().equals("Time11")) {
+                SendMessage message = createMessage("Оберіть час оповіщення:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+                settings.updateTime(chatId, "Time11");
+                Map<String, String> timeButtons = new LinkedHashMap<>();
+
+                timeButtons.put("9 ", "Time9");
+                timeButtons.put("10 ", "Time10");
+                timeButtons.put("11 "+  emodji, "Time11");
+                timeButtons.put("12 ", "Time12");
+                timeButtons.put("13 ", "Time13");
+                timeButtons.put("14 ", "Time14");
+                timeButtons.put("15 ", "Time15");
+                timeButtons.put("16 ", "Time16");
+                timeButtons.put("17 ", "Time17");
+                timeButtons.put("18 ", "Time18");
+                if (userSettings.isNotificationEnabled()) {
+                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
+                } else {
+                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
+                }
+
+                attachButtons(message, timeButtons,5);
+                sendApiMethodAsync(message);
+            }
+            if (update.getCallbackQuery().getData().equals("Time12")) {
+                SendMessage message = createMessage("Оберіть час оповіщення:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+                settings.updateTime(chatId, "Time12");
+                Map<String, String> timeButtons = new LinkedHashMap<>();
+
+                timeButtons.put("9 ", "Time9");
+                timeButtons.put("10 ", "Time10");
+                timeButtons.put("11 ", "Time11");
+                timeButtons.put("12 "+  emodji, "Time12");
+                timeButtons.put("13 ", "Time13");
+                timeButtons.put("14 ", "Time14");
+                timeButtons.put("15 ", "Time15");
+                timeButtons.put("16 ", "Time16");
+                timeButtons.put("17 ", "Time17");
+                timeButtons.put("18 ", "Time18");
+                if (userSettings.isNotificationEnabled()) {
+                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
+                } else {
+                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
+                }
+
+                attachButtons(message, timeButtons,5);
+                sendApiMethodAsync(message);
+            }
+            if (update.getCallbackQuery().getData().equals("Time13")) {
+                SendMessage message = createMessage("Оберіть час оповіщення:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+                settings.updateTime(chatId, "Time13");
+                Map<String, String> timeButtons = new LinkedHashMap<>();
+
+                timeButtons.put("9 ", "Time9");
+                timeButtons.put("10 ", "Time10");
+                timeButtons.put("11 ", "Time11");
+                timeButtons.put("12 ", "Time12");
+                timeButtons.put("13 "+  emodji, "Time13");
+                timeButtons.put("14 ", "Time14");
+                timeButtons.put("15 ", "Time15");
+                timeButtons.put("16 ", "Time16");
+                timeButtons.put("17 ", "Time17");
+                timeButtons.put("18 ", "Time18");
+                if (userSettings.isNotificationEnabled()) {
+                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
+                } else {
+                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
+                }
+
+                attachButtons(message, timeButtons,5);
+                sendApiMethodAsync(message);
+            }
+            if (update.getCallbackQuery().getData().equals("Time14")) {
+                SendMessage message = createMessage("Оберіть час оповіщення:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+                settings.updateTime(chatId, "Time14");
+                Map<String, String> timeButtons = new LinkedHashMap<>();
+
+                timeButtons.put("9 ", "Time9");
+                timeButtons.put("10 ", "Time10");
+                timeButtons.put("11 ", "Time11");
+                timeButtons.put("12 ", "Time12");
+                timeButtons.put("13 ", "Time13");
+                timeButtons.put("14 "+  emodji, "Time14");
+                timeButtons.put("15 ", "Time15");
+                timeButtons.put("16 ", "Time16");
+                timeButtons.put("17 ", "Time17");
+                timeButtons.put("18 ", "Time18");
+                if (userSettings.isNotificationEnabled()) {
+                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
+                } else {
+                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
+                }
+
+                attachButtons(message, timeButtons,5);
+                sendApiMethodAsync(message);
+            }
+            if (update.getCallbackQuery().getData().equals("Time15")) {
+                SendMessage message = createMessage("Оберіть час оповіщення:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+                settings.updateTime(chatId, "Time15");
+                Map<String, String> timeButtons = new LinkedHashMap<>();
+
+                timeButtons.put("9 ", "Time9");
+                timeButtons.put("10 ", "Time10");
+                timeButtons.put("11 ", "Time11");
+                timeButtons.put("12 ", "Time12");
+                timeButtons.put("13 ", "Time13");
+                timeButtons.put("14 ", "Time14");
+                timeButtons.put("15 "+  emodji, "Time15");
+                timeButtons.put("16 ", "Time16");
+                timeButtons.put("17 ", "Time17");
+                timeButtons.put("18 ", "Time18");
+                if (userSettings.isNotificationEnabled()) {
+                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
+                } else {
+                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
+                }
+
+                attachButtons(message, timeButtons,5);
+                sendApiMethodAsync(message);
+            }
+            if (update.getCallbackQuery().getData().equals("Time16")) {
+                SendMessage message = createMessage("Оберіть час оповіщення:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+                settings.updateTime(chatId, "Time16");
+                Map<String, String> timeButtons = new LinkedHashMap<>();
+
+                timeButtons.put("9 ", "Time9");
+                timeButtons.put("10 ", "Time10");
+                timeButtons.put("11 ", "Time11");
+                timeButtons.put("12 ", "Time12");
+                timeButtons.put("13 ", "Time13");
+                timeButtons.put("14 ", "Time14");
+                timeButtons.put("15 ", "Time15");
+                timeButtons.put("16 "+  emodji, "Time16");
+                timeButtons.put("17 ", "Time17");
+                timeButtons.put("18 ", "Time18");
+                if (userSettings.isNotificationEnabled()) {
+                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
+                } else {
+                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
+                }
+
+                attachButtons(message, timeButtons,5);
+                sendApiMethodAsync(message);
+            }
+            if (update.getCallbackQuery().getData().equals("Time17")) {
+                SendMessage message = createMessage("Оберіть час оповіщення:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+                settings.updateTime(chatId, "Time17");
+                Map<String, String> timeButtons = new LinkedHashMap<>();
+
+                timeButtons.put("9 ", "Time9");
+                timeButtons.put("10 ", "Time10");
+                timeButtons.put("11 ", "Time11");
+                timeButtons.put("12 ", "Time12");
+                timeButtons.put("13 ", "Time13");
+                timeButtons.put("14 ", "Time14");
+                timeButtons.put("15 ", "Time15");
+                timeButtons.put("16 ", "Time16");
+                timeButtons.put("17 "+  emodji, "Time17");
+                timeButtons.put("18 ", "Time18");
+                if (userSettings.isNotificationEnabled()) {
+                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
+                } else {
+                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
+                }
+
+                attachButtons(message, timeButtons,5);
+                sendApiMethodAsync(message);
+            }
+            if (update.getCallbackQuery().getData().equals("Time18")) {
+                SendMessage message = createMessage("Оберіть час оповіщення:");
+                message.setChatId(chatId);
+                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+                sendApiMethodAsync(deleteMessage);
+
+                settings.updateTime(chatId, "Time18");
+                Map<String, String> timeButtons = new LinkedHashMap<>();
+
+                timeButtons.put("9 ", "Time9");
+                timeButtons.put("10 ", "Time10");
+                timeButtons.put("11 ", "Time11");
+                timeButtons.put("12 ", "Time12");
+                timeButtons.put("13 ", "Time13");
+                timeButtons.put("14 ", "Time14");
+                timeButtons.put("15 ", "Time15");
+                timeButtons.put("16 ", "Time16");
+                timeButtons.put("17 ", "Time17");
+                timeButtons.put("18 "+  emodji, "Time18");
+                if (userSettings.isNotificationEnabled()) {
+                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
+                } else {
+                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
+                }
+
+                attachButtons(message, timeButtons,5);
+                sendApiMethodAsync(message);
+            }
+//            if (update.getCallbackQuery().getData().equals("DisableNotification")) {
+//                SendMessage message = createMessage("Оберіть час оповіщення:");
+//                message.setChatId(chatId);
+//                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+//                sendApiMethodAsync(deleteMessage);
+//
+//                settings.updateNotification(chatId, true);
+//                Map<String, String> timeButtons = new LinkedHashMap<>();
+//
+//                timeButtons.put("9 ", "Time9");
+//                timeButtons.put("10 ", "Time10");
+//                timeButtons.put("11 ", "Time11");
+//                timeButtons.put("12 ", "Time12");
+//                timeButtons.put("13 ", "Time13");
+//                timeButtons.put("14 ", "Time14");
+//                timeButtons.put("15 ", "Time15");
+//                timeButtons.put("16 ", "Time16");
+//                timeButtons.put("17 ", "Time17");
+//                timeButtons.put("18 " , "Time18");
+//                if (userSettings.isNotificationEnabled()) {
+//                    timeButtons.put("Вимкнути повідомлення "+ emodji, "DisableNotification");
+//                } else {
+//                    timeButtons.put("Увімкнути повідомлення ", "EnableNotification");
+//                }
+//            }
+//            if (update.getCallbackQuery().getData().equals("EnableNotification")) {
+//                SendMessage message = createMessage("Оберіть час оповіщення:");
+//                message.setChatId(chatId);
+//                DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
+//                sendApiMethodAsync(deleteMessage);
+//
+//                settings.updateNotification(chatId, false);
+//                Map<String, String> timeButtons = new LinkedHashMap<>();
+//
+//                timeButtons.put("9 ", "Time9");
+//                timeButtons.put("10 ", "Time10");
+//                timeButtons.put("11 ", "Time11");
+//                timeButtons.put("12 ", "Time12");
+//                timeButtons.put("13 ", "Time13");
+//                timeButtons.put("14 ", "Time14");
+//                timeButtons.put("15 ", "Time15");
+//                timeButtons.put("16 ", "Time16");
+//                timeButtons.put("17 ", "Time17");
+//                timeButtons.put("18 " , "Time18");
+//                if (userSettings.isNotificationEnabled()) {
+//                    timeButtons.put("Вимкнути повідомлення ", "DisableNotification");
+//                } else {
+//                    timeButtons.put("Увімкнути повідомлення "+ emodji, "EnableNotification");
+//                }
+//
+//            }
         }
     }
 
