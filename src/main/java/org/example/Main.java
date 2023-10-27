@@ -138,9 +138,9 @@ public class Main extends TelegramLongPollingBot {
 
 
                 String[] newDot = update.getCallbackQuery().getData().split(" ");
-                settings.updateDot(chatId, Integer.parseInt(newDot[1]));
+                settings.updateDot(chatId, newDot[1]);
                 String currentDot =newDot[1];
-                settings.updateDot(chatId, 2);
+                settings.updateDot(chatId, newDot[1]);
                 Map<String, String> dotButtons = new LinkedHashMap<>();
 
                 dotButtons.put("2 " + (currentDot.equals("2") ? emodji : ""), "setDot 2");

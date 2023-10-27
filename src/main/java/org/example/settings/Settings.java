@@ -96,8 +96,8 @@ public class Settings {
     }
 
     @SneakyThrows
-    public void updateDot(long user, int dot) {
-        updateUserData(user, "dot", String.valueOf(dot));
+    public void updateDot(long user, String dot) {
+        updateUserData(user, "dot", dot);
     }
 
     @SneakyThrows
