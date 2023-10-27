@@ -1,7 +1,7 @@
 package org.example.settings;
 
 
-import lombok.SneakyThrows;
+
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -98,7 +98,7 @@ public class SchedulerCurrency {
 
          Trigger trigger10 = TriggerBuilder.newTrigger()
                 .withIdentity("trigger10", "group1")
-                .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(18, 0))
+                .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(1, 21))
                 .build();
 
 

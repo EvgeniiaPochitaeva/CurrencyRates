@@ -7,6 +7,8 @@
     <list default="true" id="2104bcad-bcbc-47f0-bc7a-0790ea93ef0b" name="Changes" comment="fix2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/settings/SchedulerCurrency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/settings/SchedulerCurrency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/settings/SendMessageByTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/settings/SendMessageByTime.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userdata.json" beforeDir="false" afterPath="$PROJECT_DIR$/userdata.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -280,6 +282,17 @@
     <MESSAGE value="fix2" />
     <option name="LAST_COMMIT_MESSAGE" value="fix2" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/settings/SendMessageByTime.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.github.evgenys91.machinet.common.dslhistory.DslHistoryState">
     <option name="historyDtoById">
       <map>
@@ -325,6 +338,39 @@
             </ChatHistoryModel>
           </value>
         </entry>
+        <entry key="614161">
+          <value>
+            <ChatHistoryModel>
+              <option name="contextFilesPaths">
+                <list>
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/client/CurrencyClient.java" />
+                </list>
+              </option>
+              <option name="id" value="614161" />
+              <option name="initiateTms" value="1698381132682" />
+              <option name="request" value="It's possible to extract method returning 'timeButtons' from a long surrounding method" />
+              <option name="response" value="" />
+              <option name="responseDescription" value="Yes, it is possible to extract the method that returns `timeButtons` from the long surrounding method. By extracting this code into a separate method, you can improve the readability and maintainability of your code.&#10;&#10;Here's an example of how you can extract the method:&#10;&#10;```java&#10;import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;&#10;import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardMarkup;&#10;&#10;public class MyBot extends TelegramLongPollingBot {&#10;&#10;    // ...&#10;&#10;    private InlineKeyboardMarkup getTimeButtons() {&#10;        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();&#10;&#10;        List&lt;List&lt;InlineKeyboardButton&gt;&gt; rows = new ArrayList&lt;&gt;();&#10;&#10;        // Create the buttons and add them to the rows list&#10;        // ...&#10;&#10;        markup.setKeyboard(rows);&#10;        return markup;&#10;    }&#10;&#10;    @Override&#10;    public void onUpdateReceived(Update update) {&#10;        // ...&#10;&#10;        if (messageText.equals(&quot;/time&quot;)) {&#10;            InlineKeyboardMarkup timeButtons = getTimeButtons();&#10;&#10;            // Use the timeButtons in your code&#10;            // ...&#10;        }&#10;&#10;        // ...&#10;    }&#10;&#10;    // ...&#10;}&#10;```&#10;&#10;In the above code, we create a private method `getTimeButtons()` that returns an `InlineKeyboardMarkup` object. This method encapsulates the logic for creating the time buttons and setting up the keyboard layout.&#10;&#10;Inside the `onUpdateReceived()` method, when the `/time` command is received, we call the `getTimeButtons()` method to get the `InlineKeyboardMarkup` object. You can then use this object in your code as needed.&#10;&#10;By extracting the code into a separate method, you can make the `onUpdateReceived()` method more focused and easier to understand. It also allows for easier reuse of the `getTimeButtons()` logic in other parts of your code if needed." />
+              <option name="responseFileName" value="" />
+              <option name="responseFilePath" value="" />
+              <option name="responseTms" value="1698389293423" />
+              <option name="usedLocalFilePaths">
+                <list>
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/bank/currency/MonoCurrency.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/client/CurrencyClient.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/UserSettings.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/client/ApplicationConstants.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/Main.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/SchedulerCurrency.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/bank/currency/NBUCurrency.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/Settings.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/SendMessageByTime.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/bank/currency/PBCurrency.java" />
+                </list>
+              </option>
+            </ChatHistoryModel>
+          </value>
+        </entry>
         <entry key="635cb8">
           <value>
             <ChatHistoryModel>
@@ -339,6 +385,39 @@
               <option name="usedLocalFilePaths">
                 <list>
                   <option value="$PROJECT_DIR$/build.gradle.kts" />
+                </list>
+              </option>
+            </ChatHistoryModel>
+          </value>
+        </entry>
+        <entry key="7c03a2">
+          <value>
+            <ChatHistoryModel>
+              <option name="contextFilesPaths">
+                <list>
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/client/CurrencyClient.java" />
+                </list>
+              </option>
+              <option name="id" value="7c03a2" />
+              <option name="initiateTms" value="1698359133853" />
+              <option name="request" value="How to fix the following error:&#10;'TelegramLongPollingBot()' is deprecated" />
+              <option name="response" value="" />
+              <option name="responseDescription" value="To fix the deprecation warning for the `TelegramLongPollingBot()` constructor, you can use the `DefaultBotOptions` class to create an instance of the `TelegramLongPollingBot` instead. The `DefaultBotOptions` class allows you to configure various options for your bot, such as proxy settings and connection timeouts.&#10;&#10;Here's an example of how to fix the error:&#10;&#10;```java&#10;import org.telegram.telegrambots.bots.DefaultBotOptions;&#10;import org.telegram.telegrambots.bots.TelegramLongPollingBot;&#10;import org.telegram.telegrambots.meta.api.objects.Update;&#10;&#10;public class MyBot extends TelegramLongPollingBot {&#10;&#10;    public MyBot(DefaultBotOptions options) {&#10;        super(options);&#10;    }&#10;&#10;    @Override&#10;    public void onUpdateReceived(Update update) {&#10;        // Handle incoming updates&#10;    }&#10;&#10;    @Override&#10;    public String getBotUsername() {&#10;        return &quot;your_bot_username&quot;;&#10;    }&#10;&#10;    @Override&#10;    public String getBotToken() {&#10;        return &quot;your_bot_token&quot;;&#10;    }&#10;&#10;    public static void main(String[] args) {&#10;        DefaultBotOptions options = new DefaultBotOptions();&#10;        MyBot bot = new MyBot(options);&#10;        // Start the bot&#10;        bot.startPolling();&#10;    }&#10;}&#10;```&#10;&#10;In the above code, we create a new class `MyBot` that extends `TelegramLongPollingBot`. We provide a constructor that takes a `DefaultBotOptions` object as a parameter and passes it to the superclass constructor using `super(options)`.&#10;&#10;In the `main` method, we create an instance of `DefaultBotOptions` and pass it to the `MyBot` constructor. Then, we start the bot by calling the `startPolling()` method.&#10;&#10;Make sure to replace `&quot;your_bot_username&quot;` and `&quot;your_bot_token&quot;` with your actual bot username and token.&#10;&#10;By using the `DefaultBotOptions` class, you can configure additional options for your bot if needed." />
+              <option name="responseFileName" value="" />
+              <option name="responseFilePath" value="" />
+              <option name="responseTms" value="1698359141572" />
+              <option name="usedLocalFilePaths">
+                <list>
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/bank/currency/MonoCurrency.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/client/CurrencyClient.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/UserSettings.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/client/ApplicationConstants.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/Main.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/SchedulerCurrency.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/bank/currency/NBUCurrency.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/Settings.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/settings/SendMessageByTime.java" />
+                  <option value="$PROJECT_DIR$/src/main/java/org/example/bank/currency/PBCurrency.java" />
                 </list>
               </option>
             </ChatHistoryModel>

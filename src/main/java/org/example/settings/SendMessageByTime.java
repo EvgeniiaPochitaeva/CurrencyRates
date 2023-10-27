@@ -12,10 +12,12 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
 import java.util.Set;
+
+import static org.example.client.ApplicationConstants.MONO_BANK;
+import static org.example.client.ApplicationConstants.PRIVAT_BANK;
 
 public class SendMessageByTime implements Job {
     public void execute(JobExecutionContext context) {
@@ -38,33 +40,18 @@ public class SendMessageByTime implements Job {
 
         Settings settings = new Settings();
         for (String user : users) {
-
-                UserSettings userSettings = settings.getOrCreateUserSettings(Long.parseLong(user));
-
-                String currentBank = userSettings.getBank();
-                String currentDot = userSettings.getDotCount();
-                boolean currentEuroEnabled = userSettings.isEuroEnabled();
-                boolean currentUsdEnabled = userSettings.isUsdEnabled();
-                String currentTime = userSettings.getTime();
-
-                if (userSettings.isNotificationEnabled() & currentHour.contains(currentTime) & userSettings.getBank()
-                        .equals("mono_bank")) {
-                    String userStringCurrencies = currencyClient.getUserMonoCurrencyRates(userSettings);
-                    SendMessage message = new SendMessage(user, new String(userStringCurrencies.getBytes(),
-                            StandardCharsets.UTF_8));
-                    try {
-                        main.execute(message);
-                    } catch (TelegramApiException e) {
-                        throw new RuntimeException(e);
-                    }
-                    //TODO тут ми проходим по кожному юзера і дивимося, якщо зараз такеж время яке у юзера
-                    // в налаштуваннях то треба запросити курс валют відповідно до налаштувань, після відправити це юзеру
-                    //TODO message.setChatId(user)   -   тут айді це user в For
-                }
-            if (userSettings.isNotificationEnabled() & currentHour.contains(currentTime) & userSettings.getBank()
-                    .equals("privat_bank")) {
-                String userStringCurrencies = currencyClient.getUserPBCurrencyRates(userSettings);
-                SendMessage message = new SendMessage(user, new String(userStringCurrencies.getBytes(),
+            UserSettings userSettings = settings.getOrCreateUserSettings(Long.parseLong(user));
+            String currentTime = userSettings.getTime();
+            String currentBank = userSettings.getBank();
+            String text;
+            if (userSettings.isNotificationEnabled() & currentHour.contains(currentTime) ) {
+                if (currentBank.equals(MONO_BANK)) {
+                    text = currencyClient.getUserMonoCurrencyRates(userSettings);
+                } else if (currentBank.equals(PRIVAT_BANK)) {
+                    text = currencyClient.getUserPBCurrencyRates(userSettings);
+                } else {
+                    text = currencyClient.getUserNBUCurrencyRates(userSettings);
+                }                SendMessage message = new SendMessage(user, new String(text.getBytes(),
                         StandardCharsets.UTF_8));
                 try {
                     main.execute(message);
@@ -72,18 +59,6 @@ public class SendMessageByTime implements Job {
                     throw new RuntimeException(e);
                 }
             }
-            if (userSettings.isNotificationEnabled() & currentHour.contains(currentTime) & userSettings.getBank()
-                    .equals("nbu_bank")) {
-                String userStringCurrencies = currencyClient.getUserNBUCurrencyRates(userSettings);
-                SendMessage message = new SendMessage(user, new String(userStringCurrencies.getBytes(),
-                        StandardCharsets.UTF_8));
-                try {
-                    main.execute(message);
-                } catch (TelegramApiException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
         }
     }
 }
