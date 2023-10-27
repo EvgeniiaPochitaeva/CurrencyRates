@@ -136,10 +136,10 @@ public class Main extends TelegramLongPollingBot {
                 DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
                 sendApiMethodAsync(deleteMessage);
 
-                String currentDot = userSettings.getDotCount();
+
                 String[] newDot = update.getCallbackQuery().getData().split(" ");
                 settings.updateDot(chatId, Integer.parseInt(newDot[1]));
-
+                String currentDot =newDot[1];
                 settings.updateDot(chatId, 2);
                 Map<String, String> dotButtons = new LinkedHashMap<>();
 
@@ -177,13 +177,12 @@ public class Main extends TelegramLongPollingBot {
                 message.setChatId(chatId);
                 DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
                 sendApiMethodAsync(deleteMessage);
-                String currentBank = userSettings.getBank();
                 String[] newBank = update.getCallbackQuery().getData().split(" ");
                 settings.updateBank(chatId, newBank[1]);
                 Map<String, String> bankButtons = new LinkedHashMap<>();
-                bankButtons.put("НБУ " + (currentBank.equals(NBU_BANK) ? emodji : ""), "setBank " + NBU_BANK);
-                bankButtons.put("Приватбанк " + (currentBank.equals(PRIVAT_BANK) ? emodji : ""),"setBank " + PRIVAT_BANK);
-                bankButtons.put("Монобанк " + (currentBank.equals(MONO_BANK) ? emodji : ""), "setBank " + MONO_BANK);
+                bankButtons.put("НБУ " + (newBank[1].equals(NBU_BANK) ? emodji : ""), "setBank " + NBU_BANK);
+                bankButtons.put("Приватбанк " + (newBank[1].equals(PRIVAT_BANK) ? emodji : ""),"setBank " + PRIVAT_BANK);
+                bankButtons.put("Монобанк " + (newBank[1].equals(MONO_BANK) ? emodji : ""), "setBank " + MONO_BANK);
                 attachButtons(message, bankButtons,2);
                 sendApiMethodAsync(message);
 
