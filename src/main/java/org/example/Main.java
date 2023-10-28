@@ -26,7 +26,9 @@ import static org.example.client.ApplicationConstants.*;
 
 
 public class Main extends TelegramLongPollingBot {
+    String emodji = "✅";
     public static void main(String[] args) throws TelegramApiException, SchedulerException {
+
         SchedulerCurrency.Start();
         TelegramBotsApi api = new TelegramBotsApi(DefaultBotSession.class);
         api.registerBot(new Main());
@@ -34,68 +36,87 @@ public class Main extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "CurrencyRates2023Bot";
+        return BotConstance.BOT_NAME;
     }
 
     @Override
     public String getBotToken() {
-        //return "6819128935:AAFD36ZFRbl8b1ZW5RzbmVmle6imI6bgFl0";
-        return "6834411073:AAEIUv86SUhblfrDBWoZTKUaKDgcOis_npM";
+        return BotConstance.BOT_TOKEN;
     }
-
 
     @Override
     public void onUpdateReceived(Update update) {
-
         Long chatId = getChatId(update);
-        String emodji = "✅";
         Settings settings = new Settings();
         CurrencyClient currencyClient = new CurrencyClient();
         UserSettings userSettings = settings.getOrCreateUserSettings(chatId);
 
-
-        if (update.hasMessage() && update.getMessage().getText().equals("/start")) {
-            sendImage("eur-usd-dollar-currency", chatId);
-            SendMessage message = createMessage(" *Ласкаво просимо!* \n" +
-                    "Цей бот допоможе відслідковувати актуальні курси валют.");
-            message.setChatId(chatId);
-            Map<String, String> buttons = new LinkedHashMap<>();
-            buttons.put("Отримати інфо", "Get info");
-            buttons.put("Налаштування", "Setting");
-            attachButtons(message, buttons,2);
-            sendApiMethodAsync(message);
+            if (update.hasMessage() && update.getMessage().getText().equals("/start")) {
+                handleStartCommand(chatId);
+            } else if (update.hasCallbackQuery()) {
+                String callbackData = update.getCallbackQuery().getData();
+                if (callbackData.equals("Get info")) {
+                    handleGetInfoCallback(chatId, settings, currencyClient, userSettings);
+                } else if (callbackData.equals("Setting")) {
+                    handleSettingCallback(chatId);
+                } else if (callbackData.equals("Dot")) {
+                    handleDotCallback(chatId, userSettings);
+                } else if (callbackData.contains("setDot")) {
+                    handleSetDotCallback(chatId, settings, update);
+                } else if (callbackData.equals("Bank")) {
+                    handleBankCallback(chatId, userSettings);
+                } else if (callbackData.contains("setBank")) {
+                    handleSetBankCallback(chatId, settings, update);
+                } else if (callbackData.equals("Currency")) {
+                    handleCurrencyCallback(chatId, userSettings);
+                } else if (callbackData.equals("EURO")) {
+                    handleEuroCallback(chatId, userSettings, settings, update);
+                } else if (callbackData.equals("USD")) {
+                    handleUsdCallback(chatId, userSettings, settings, update);
+                } else if (callbackData.equals("Time")) {
+                    handleTimeCallback(chatId, userSettings);
+                } else if (callbackData.contains("setTime")) {
+                    handleSetTimeCallback(chatId, settings, userSettings, update);
+                } else if (callbackData.equals("updateNotification")) {
+                    handleUpdateNotificationCallback(chatId, userSettings, settings, update);
+                }
+            }
         }
 
-
-        if (update.hasCallbackQuery()) {
-            if (update.getCallbackQuery().getData().equals("Get info")) {
-                settings.getOrCreateUserSettings(chatId);
-                String bank = userSettings.getBank();
-                String result;
-                if (bank.equals(PRIVAT_BANK)) {
-                   result = currencyClient.getUserPBCurrencyRates(userSettings);
-                } else if (bank.equals(MONO_BANK)) {
-                    result = currencyClient.getUserMonoCurrencyRates(userSettings);
-                } else {
-                    result = currencyClient.getUserNBUCurrencyRates(userSettings);
-                }
-
-                SendMessage message = createMessage(result); // данні банка
+        private void handleStartCommand(Long chatId) {
+                sendImage("eur-usd-dollar-currency", chatId);
+                SendMessage message = createMessage(" *Ласкаво просимо!* \n" +
+                        "Цей бот допоможе відслідковувати актуальні курси валют.");
                 message.setChatId(chatId);
                 Map<String, String> buttons = new LinkedHashMap<>();
                 buttons.put("Отримати інфо", "Get info");
                 buttons.put("Налаштування", "Setting");
-
-                attachButtons(message, buttons,2);
-
-
+                attachButtons(message, buttons, 2);
                 sendApiMethodAsync(message);
+        }
 
+        private void handleGetInfoCallback(Long chatId, Settings settings, CurrencyClient currencyClient, UserSettings userSettings) {
+            settings.getOrCreateUserSettings(chatId);
+            String bank = userSettings.getBank();
+            String result;
+            if (bank.equals(PRIVAT_BANK)) {
+                result = currencyClient.getUserPBCurrencyRates(userSettings);
+            } else if (bank.equals(MONO_BANK)) {
+                result = currencyClient.getUserMonoCurrencyRates(userSettings);
+            } else {
+                result = currencyClient.getUserNBUCurrencyRates(userSettings);
             }
+            SendMessage message = createMessage(result);
+            message.setChatId(chatId);
+            Map<String, String> buttons = new LinkedHashMap<>();
+            buttons.put("Отримати інфо", "Get info");
+            buttons.put("Налаштування", "Setting");
 
+            attachButtons(message, buttons,2);
+            sendApiMethodAsync(message);
+        }
 
-            if (update.getCallbackQuery().getData().equals("Setting")) {
-
+        private void handleSettingCallback(Long chatId) {
                 SendMessage message = createMessage("Оберіть налаштування:");
                 message.setChatId(chatId);
 
@@ -105,61 +126,45 @@ public class Main extends TelegramLongPollingBot {
                 settingButtons.put("Кількість знаків \n" + "після коми", "Dot");
                 settingButtons.put("Час оповіщення", "Time");
 
-                attachButtons(message, settingButtons,2);
-
+                attachButtons(message, settingButtons, 2);
                 sendApiMethodAsync(message);
-            }
+        }
 
-
-            if (update.getCallbackQuery().getData().equals("Dot")) {
+        private void handleDotCallback(Long chatId, UserSettings userSettings) {
                 SendMessage message = createMessage("Оберіть кількість знаків після коми:");
                 message.setChatId(chatId);
-
                 String currentDot = userSettings.getDotCount();
 
-
-                //TODO позначати смайлом яка кількість крапок щас у юзера -  зробила!!
                 Map<String, String> dotButtons = new LinkedHashMap<>();
-
-
                 dotButtons.put("2 " + (currentDot.equals("2") ? emodji : ""), "setDot 2");
                 dotButtons.put("3 " + (currentDot.equals("3") ? emodji : ""), "setDot 3");
                 dotButtons.put("4 " + (currentDot.equals("4") ? emodji : ""), "setDot 4");
 
-                attachButtons(message, dotButtons,3);
+                attachButtons(message, dotButtons, 3);
                 sendApiMethodAsync(message);
-            }
+        }
 
-            if (update.getCallbackQuery().getData().contains("setDot")) {
+        private void handleSetDotCallback(Long chatId, Settings settings, Update update) {
                 SendMessage message = createMessage("Оберіть кількість знаків після коми:");
                 message.setChatId(chatId);
                 DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
                 sendApiMethodAsync(deleteMessage);
-
-
                 String[] newDot = update.getCallbackQuery().getData().split(" ");
-                settings.updateDot(chatId, newDot[1]);
-                String currentDot =newDot[1];
-                settings.updateDot(chatId, newDot[1]);
+                String currentDot = newDot[1];
+                settings.updateDot(chatId, currentDot);
                 Map<String, String> dotButtons = new LinkedHashMap<>();
-
                 dotButtons.put("2 " + (currentDot.equals("2") ? emodji : ""), "setDot 2");
                 dotButtons.put("3 " + (currentDot.equals("3") ? emodji : ""), "setDot 3");
                 dotButtons.put("4 " + (currentDot.equals("4") ? emodji : ""), "setDot 4");
 
-                attachButtons(message, dotButtons,3);
+                attachButtons(message, dotButtons, 3);
                 sendApiMethodAsync(message);
+        }
 
-            }
-
-
-            if (update.getCallbackQuery().getData().equals("Bank")) {
+        private void handleBankCallback(Long chatId, UserSettings userSettings) {
                 SendMessage message = createMessage("Оберіть банк:");
                 message.setChatId(chatId);
-
                 String currentBank = userSettings.getBank();
-                //TODO позначати смайлом який банк щас у юзера -  зробила!!
-
                 Map<String, String> bankButtons = new LinkedHashMap<>();
 
                 bankButtons.put("НБУ " + (currentBank.equals(NBU_BANK) ? emodji : ""), "setBank " + NBU_BANK);
@@ -168,11 +173,8 @@ public class Main extends TelegramLongPollingBot {
 
                 attachButtons(message, bankButtons,2);
                 sendApiMethodAsync(message);
-                return;
-            }
-
-
-            if (update.getCallbackQuery().getData().contains("setBank")) {
+        }
+        private void handleSetBankCallback (Long chatId, Settings settings,Update update) {
                 SendMessage message = createMessage("Оберіть банк:");
                 message.setChatId(chatId);
                 DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
@@ -185,17 +187,14 @@ public class Main extends TelegramLongPollingBot {
                 bankButtons.put("Монобанк " + (newBank[1].equals(MONO_BANK) ? emodji : ""), "setBank " + MONO_BANK);
                 attachButtons(message, bankButtons,2);
                 sendApiMethodAsync(message);
+        }
 
-            }
-
-
-            if (update.getCallbackQuery().getData().equals("Currency")) {
+        private void handleCurrencyCallback(Long chatId, UserSettings userSettings){
                 SendMessage message = createMessage("Оберіть валюту:");
                 message.setChatId(chatId);
 
                 boolean currentEuroEnabled = userSettings.isEuroEnabled();
                 boolean currentUsdEnabled = userSettings.isUsdEnabled();
-                //TODO  позначати смайлом які валюти івумкнуті -  зробила!!
 
                 Map<String, String> currencyButtons = new LinkedHashMap<>();
                 String euroText = "EURO " + (currentEuroEnabled ? emodji : "");
@@ -207,9 +206,9 @@ public class Main extends TelegramLongPollingBot {
                 attachButtons(message, currencyButtons,2);
 
                 sendApiMethodAsync(message);
+        }
 
-            }
-            if (update.getCallbackQuery().getData().equals("EURO")) {
+        private void handleEuroCallback(Long chatId, UserSettings userSettings, Settings settings,Update update) {
                 SendMessage message = createMessage("Оберіть валюту:");
                 message.setChatId(chatId);
 
@@ -227,9 +226,8 @@ public class Main extends TelegramLongPollingBot {
                 currencyButtons.put(usdText, "USD");
                 attachButtons(message, currencyButtons,2);
                 sendApiMethodAsync(message);
-
-            }
-            if (update.getCallbackQuery().getData().equals("USD")) {
+        }
+        private void handleUsdCallback(Long chatId, UserSettings userSettings, Settings settings,Update update) {
                 SendMessage message = createMessage("Оберіть валюту:");
                 message.setChatId(chatId);
                 DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
@@ -244,10 +242,8 @@ public class Main extends TelegramLongPollingBot {
                 currencyButtons.put(usdText, "USD");
                 attachButtons(message, currencyButtons,2);
                 sendApiMethodAsync(message);
-
-            }
-
-            if (update.getCallbackQuery().getData().equals("Time")) {
+        }
+        private void handleTimeCallback(Long chatId, UserSettings userSettings) {
                 SendMessage message = createMessage("Оберіть час оповіщення:");
                 message.setChatId(chatId);
                 String currentTime = userSettings.getTime();
@@ -272,10 +268,9 @@ public class Main extends TelegramLongPollingBot {
                 attachButtons(message, timeButtons,5);
 
                 sendApiMethodAsync(message);
-            }
 
-
-            if (update.getCallbackQuery().getData().contains("setTime")) {
+        }
+        private void handleSetTimeCallback(Long chatId, Settings settings,UserSettings userSettings, Update update) {
                 SendMessage message = createMessage("Оберіть час оповіщення:");
                 message.setChatId(chatId);
                 DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
@@ -284,7 +279,6 @@ public class Main extends TelegramLongPollingBot {
                 String currentTime = words[1];
                 settings.updateTime(chatId, currentTime);
                 Map<String, String> timeButtons = new LinkedHashMap<>();
-
 
                 timeButtons.put("9 " + (currentTime.equals("9") ? emodji : ""), "setTime 9");
                 timeButtons.put("10 " + (currentTime.equals("10") ? emodji : ""), "setTime 10");
@@ -304,15 +298,13 @@ public class Main extends TelegramLongPollingBot {
 
                 attachButtons(message, timeButtons,5);
                 sendApiMethodAsync(message);
-            }
-
-            if (update.getCallbackQuery().getData().equals("updateNotification")) {
+        }
+        private void handleUpdateNotificationCallback (Long chatId, UserSettings userSettings, Settings settings, Update update) {
                 SendMessage message = createMessage("Оберіть час оповіщення:");
                 message.setChatId(chatId);
                 DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
                 sendApiMethodAsync(deleteMessage);
 
-                //settings.updateNotification(chatId, !userSettings.isNotificationEnabled());
                 boolean currentNotification = userSettings.isNotificationEnabled();
 
                 Map<String, String> timeButtons = new LinkedHashMap<>();
@@ -337,10 +329,6 @@ public class Main extends TelegramLongPollingBot {
                 sendApiMethodAsync(message);
                 settings.updateNotification(chatId);
             }
-
-        }
-    }
-
     public Long getChatId (Update update){
         if (update.hasMessage()) {
             return update.getMessage().getFrom().getId();
@@ -392,6 +380,4 @@ public class Main extends TelegramLongPollingBot {
         markup.setKeyboard(keyboard);
         message.setReplyMarkup(markup);
     }
-
-
 }
