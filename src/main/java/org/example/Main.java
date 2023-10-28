@@ -219,7 +219,7 @@ public class Main extends TelegramLongPollingBot {
                 boolean currentEuroEnabled = userSettings.isEuroEnabled();
 
                 boolean currentUsdEnabled = userSettings.isUsdEnabled();
-                settings.updateCurrency(chatId, "euro", !currentEuroEnabled);
+                settings.updateCurrency(chatId, "euro");
                 Map<String, String> currencyButtons = new LinkedHashMap<>();
                 String euroText = "EURO " + (!currentEuroEnabled ? emodji : "");
                 String usdText = "USD " + (currentUsdEnabled ? emodji : "");
@@ -236,7 +236,7 @@ public class Main extends TelegramLongPollingBot {
                 sendApiMethodAsync(deleteMessage);
                 boolean currentEuroEnabled = userSettings.isEuroEnabled();
                 boolean currentUsdEnabled = userSettings.isUsdEnabled();
-                settings.updateCurrency(chatId, "usd", !currentUsdEnabled);
+                settings.updateCurrency(chatId, "usd");
                 Map<String, String> currencyButtons = new LinkedHashMap<>();
                 String euroText = "EURO " + (currentEuroEnabled ? emodji : "");
                 String usdText = "USD " + (!currentUsdEnabled ? emodji : "");
@@ -335,7 +335,7 @@ public class Main extends TelegramLongPollingBot {
                 }
                 attachButtons(message, timeButtons,5);
                 sendApiMethodAsync(message);
-                settings.updateNotification(chatId, !currentNotification);
+                settings.updateNotification(chatId);
             }
 
         }

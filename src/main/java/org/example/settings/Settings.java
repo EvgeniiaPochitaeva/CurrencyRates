@@ -9,22 +9,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Settings {
+    public static final String userdataFileName = "userdata.json";
+
     @SneakyThrows
     public UserSettings getOrCreateUserSettings(long user) {
-        File file = new File("userdata.json");
-        if (!file.exists()) {
-
-            try (FileWriter fileWriter = new FileWriter("userdata.json")) {
-                fileWriter.write("{}");
-            } catch (IOException e) {
-                throw new IOException();
-            }
-        }
+        checkExistFile();
 
 
-
-
-        JsonReader reader = Json.createReader(new FileReader("userdata.json"));
+        JsonReader reader = Json.createReader(new FileReader(userdataFileName));
         JsonObject jsonObject = reader.readObject();
         reader.close();
         if (jsonObject.getJsonObject(String.valueOf(user)) != null) {
@@ -43,13 +35,24 @@ public class Settings {
         }
 
     }
+
+    @SneakyThrows
+    private void checkExistFile() {
+        File file = new File(userdataFileName);
+        if (!file.exists()) {
+            try (FileWriter fileWriter = new FileWriter(userdataFileName)) {
+                fileWriter.write("{}");
+            } catch (IOException e) {
+                throw new IOException();
+            }
+        }
+    }
+
     @SneakyThrows
     private UserSettings createUserSettings(long user) {
-
-        JsonReader reader = Json.createReader(new FileReader("userdata.json"));
+        JsonReader reader = Json.createReader(new FileReader(userdataFileName));
         JsonObject jsonObject = reader.readObject();
         reader.close();
-
         JsonObject newValue = Json.createObjectBuilder()
                 .add("bank", "privat_bank")
                 .add("usd", true)
@@ -64,7 +67,7 @@ public class Settings {
 
         jsonObject = jsonObjectBuilder.build();
 
-        JsonWriter writer = Json.createWriter(new FileWriter("userdata.json"));
+        JsonWriter writer = Json.createWriter(new FileWriter(userdataFileName));
         writer.writeObject(jsonObject);
         writer.close();
 
@@ -86,8 +89,8 @@ public class Settings {
     }
 
     @SneakyThrows
-    public void updateCurrency(long user, String currency, boolean setEnabled) {
-        updateUserData(user, currency, setEnabled);
+    public void updateCurrency(long user, String currency) {
+        updateUserData(user, currency, null);
     }
 
     @SneakyThrows
@@ -101,57 +104,34 @@ public class Settings {
     }
 
     @SneakyThrows
-    public void updateNotification(long user, boolean setEnabled) {
-        updateUserData(user, "notification", setEnabled);
+    public void updateNotification(long user) {
+        updateUserData(user, "notification", null);
     }
 
-    @SneakyThrows
-    private void updateUserData(long user,String key, String value){
-        UserSettings userSettings = getOrCreateUserSettings(user);
-        JsonReader reader = Json.createReader(new FileReader("userdata.json"));
-        JsonObject jsonObject = reader.readObject();
-        reader.close();
-        JsonObject newValue = Json.createObjectBuilder()
-                .add("bank", userSettings.getBank())
-                .add("usd", userSettings.isUsdEnabled())
-                .add("notification", userSettings.isNotificationEnabled())
-                .add("euro", userSettings.isEuroEnabled())
-                .add("time", userSettings.getTime())
-                .add("dot", userSettings.getDotCount())
-                .add(key, value)
-                .build();
-
-        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder(jsonObject)
-                .add(String.valueOf(user), newValue);
-
-        jsonObject = jsonObjectBuilder.build();
-
-        JsonWriter writer = Json.createWriter(new FileWriter("userdata.json"));
-        writer.writeObject(jsonObject);
-        writer.close();
-
-    }
 
     @SneakyThrows
-
-    private void updateUserData(long user,String key, Boolean value) {
+    private void updateUserData(long user, String key, String value) {
         UserSettings userSettings = getOrCreateUserSettings(user);
-        JsonReader reader = Json.createReader(new FileReader("userdata.json"));
+        JsonReader reader = Json.createReader(new FileReader(userdataFileName));
         JsonObject jsonObject = reader.readObject();
         reader.close();
-        JsonObject newValue = Json.createObjectBuilder()
-                .add("bank", userSettings.getBank())
-                .add("usd", userSettings.isUsdEnabled())
-                .add("notification", userSettings.isNotificationEnabled())
-                .add("euro", userSettings.isEuroEnabled())
-                .add("time", userSettings.getTime())
-                .add("dot", userSettings.getDotCount())
-                .add(key, value)
-                .build();
+        JsonObjectBuilder newValue = Json.createObjectBuilder();
+        newValue.add("bank", userSettings.getBank());
+        newValue.add("time", userSettings.getTime());
+        newValue.add("dot", userSettings.getDotCount());
+        newValue.add("euro", userSettings.isEuroEnabled());
+        newValue.add("usd", userSettings.isUsdEnabled());
+        newValue.add("notification", userSettings.isNotificationEnabled());
+        switch (key) {
+            case "euro" -> newValue.add("euro", !userSettings.isEuroEnabled());
+            case "usd" -> newValue.add("usd", !userSettings.isUsdEnabled());
+            case "notification" -> newValue.add("notification", !userSettings.isNotificationEnabled());
+            default -> newValue.add(key, value);
+        }
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder(jsonObject)
-                .add(String.valueOf(user), newValue);
+                .add(String.valueOf(user), newValue.build());
         jsonObject = jsonObjectBuilder.build();
-        JsonWriter writer = Json.createWriter(new FileWriter("userdata.json"));
+        JsonWriter writer = Json.createWriter(new FileWriter(userdataFileName));
         writer.writeObject(jsonObject);
         writer.close();
     }
