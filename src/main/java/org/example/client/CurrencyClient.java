@@ -75,8 +75,8 @@ public class CurrencyClient {
     @SneakyThrows
     public String getUserMonoCurrencyRates(UserSettings userSettings)  {
         int dotCount = Integer.parseInt(userSettings.getDotCount());
-
-        if (userSettings.isEuroEnabled() && !userSettings.isEuroEnabled()) {
+        
+        if (userSettings.isEuroEnabled() && !userSettings.isUsdEnabled()) {
             List<MonoCurrency> currencyRates = new CurrencyClient().getMonoCurrencyRates(URI.create(MONO_URI));
             List<MonoCurrency> userCurrencyRates = currencyRates.stream()
                     .filter(s -> s.getCurrencyCodeA() == EUR_CODE && s.getCurrencyCodeB() == UAH_CODE)
@@ -104,6 +104,7 @@ public class CurrencyClient {
                     .map(Object::toString)
                     .collect(Collectors.joining("\n"));
         }
+
         return "-1";
 
     }
