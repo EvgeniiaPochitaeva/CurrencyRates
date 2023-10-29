@@ -15,7 +15,7 @@ import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.example.client.ApplicationConstants.*;
+import static org.example.ApplicationConstants.*;
 
 public class CurrencyClient {
     private final HttpClient httpClient = HttpClient.newHttpClient();

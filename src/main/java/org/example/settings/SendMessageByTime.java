@@ -14,8 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
 import java.util.Set;
 
-import static org.example.client.ApplicationConstants.MONO_BANK;
-import static org.example.client.ApplicationConstants.PRIVAT_BANK;
+import static org.example.ApplicationConstants.MONO_BANK;
+import static org.example.ApplicationConstants.PRIVAT_BANK;
 
 public class SendMessageByTime implements Job {
 
