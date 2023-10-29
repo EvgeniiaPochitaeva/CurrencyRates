@@ -217,43 +217,6 @@ public class Main extends TelegramLongPollingBot {
         sendApiMethodAsync(message);
     }
 
-//    private void handleEuroCallback(Long chatId, UserSettings userSettings, Settings settings, Update update) {
-//        SendMessage message = createMessage("Оберіть валюту:");
-//        message.setChatId(chatId);
-//
-//        DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
-//        sendApiMethodAsync(deleteMessage);
-//
-//        boolean currentEuroEnabled = userSettings.isEuroEnabled();
-//
-//        boolean currentUsdEnabled = userSettings.isUsdEnabled();
-//        settings.updateCurrency(chatId, "euro");
-//        Map<String, String> currencyButtons = new LinkedHashMap<>();
-//        String euroText = "EURO " + (!currentEuroEnabled ? emoji : "");
-//        String usdText = "USD " + (currentUsdEnabled ? emoji : "");
-//        currencyButtons.put(euroText, "setEURO");
-//        currencyButtons.put(usdText, "setUSD");
-//        attachButtons(message, currencyButtons, 2);
-//        sendApiMethodAsync(message);
-//    }
-//
-//    private void handleUsdCallback(Long chatId, UserSettings userSettings, Settings settings, Update update) {
-//        SendMessage message = createMessage("Оберіть валюту:");
-//        message.setChatId(chatId);
-//        DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), update.getCallbackQuery().getMessage().getMessageId());
-//        sendApiMethodAsync(deleteMessage);
-//        boolean currentEuroEnabled = userSettings.isEuroEnabled();
-//        boolean currentUsdEnabled = userSettings.isUsdEnabled();
-//        settings.updateCurrency(chatId, "usd");
-//        Map<String, String> currencyButtons = new LinkedHashMap<>();
-//        String euroText = "EURO " + (currentEuroEnabled ? emoji : "");
-//        String usdText = "USD " + (!currentUsdEnabled ? emoji : "");
-//        currencyButtons.put(euroText, "setEURO");
-//        currencyButtons.put(usdText, "setUSD");
-//        attachButtons(message, currencyButtons, 2);
-//        sendApiMethodAsync(message);
-//    }
-
     private void handleTimeCallback(Long chatId, UserSettings userSettings) {
         SendMessage message = createMessage("Оберіть час оповіщення:");
         message.setChatId(chatId);
