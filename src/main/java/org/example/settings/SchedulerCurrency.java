@@ -99,7 +99,7 @@ public class SchedulerCurrency {
 
          Trigger trigger10 = TriggerBuilder.newTrigger()
                 .withIdentity("trigger10", group)
-                .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(22, 5))
+                .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(18, 0))
                 .build();
 
 
