@@ -5,37 +5,16 @@ import lombok.*;
 @Data
 @Builder
 public class PBCurrency {
+    @Getter
     private String ccy;
     private String base_ccy;
+    @Getter
     private String buy;
+    @Getter
     private String sale;
-
-    public String getCcy() {
-        return ccy;
-    }
-
-    public void setCcy(String ccy) {
-        this.ccy = ccy;
-    }
-
-    public String getBase_ccy() {
-        return base_ccy;
-    }
-
-    public void setBase_ccy(String base_ccy) {
-        this.base_ccy = base_ccy;
-    }
-
-    public String getBuy() {
-        return buy;
-    }
 
     public void setBuy(String buy) {
         this.buy = buy;
-    }
-
-    public String getSale() {
-        return sale;
     }
 
     public void setSale(String sale) {

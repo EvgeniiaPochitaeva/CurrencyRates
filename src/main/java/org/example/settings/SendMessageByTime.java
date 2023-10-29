@@ -47,7 +47,8 @@ public class SendMessageByTime implements Job {
                 text = currencyClient.getUserPBCurrencyRates(userSettings);
             } else {
                 text = currencyClient.getUserNBUCurrencyRates(userSettings);
-            }                SendMessage message = new SendMessage(user, new String(text.getBytes(),
+            }
+            SendMessage message = new SendMessage(user, new String(text.getBytes(),
                     StandardCharsets.UTF_8));
             main.execute(message);
         }

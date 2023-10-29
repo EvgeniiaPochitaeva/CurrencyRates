@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2104bcad-bcbc-47f0-bc7a-0790ea93ef0b" name="Changes" comment="fix dot">
+    <list default="true" id="2104bcad-bcbc-47f0-bc7a-0790ea93ef0b" name="Changes" comment="update BotConstants name&#10;add using OS Environmental variables&#10;remove unused currencies Getters and Setters">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/CurrencyRates.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/CurrencyRates.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/BotConstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/BotConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/ApplicationConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/ApplicationConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/client/CurrencyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/client/CurrencyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/MonoCurrency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/MonoCurrency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/NBUCurrency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/NBUCurrency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/PBCurrency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/bank/currency/PBCurrency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/settings/SendMessageByTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/settings/SendMessageByTime.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/userdata.json" beforeDir="false" afterPath="$PROJECT_DIR$/userdata.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,12 +34,7 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="CurrencyRates" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
@@ -70,6 +70,9 @@
       </UrlAndAccount>
     </option>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.quartz-scheduler/quartz/2.5.0-rc1/5c1f30e99cfc6a21000d36218b7daa4bdc53f43/quartz-2.5.0-rc1-sources.jar!/org/quartz/Job.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
@@ -91,9 +94,9 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/eshap/IdeaProjects/CurrencyRates&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/GoIT/Java/GitHub/CurrencyRates&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/eshap/IdeaProjects/CurrencyRates/src/main/java/org/example/Main.java&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -102,7 +105,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="graalvm-ce-17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="org.example.Main" />
@@ -312,7 +315,8 @@
     <MESSAGE value="fix tome buttons, refactor" />
     <MESSAGE value="fix time, dot, bank buttons, refactor" />
     <MESSAGE value="fix dot" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix dot" />
+    <MESSAGE value="update BotConstants name&#10;add using OS Environmental variables&#10;remove unused currencies Getters and Setters" />
+    <option name="LAST_COMMIT_MESSAGE" value="update BotConstants name&#10;add using OS Environmental variables&#10;remove unused currencies Getters and Setters" />
   </component>
   <component name="com.github.evgenys91.machinet.common.dslhistory.DslHistoryState">
     <option name="historyDtoById">
